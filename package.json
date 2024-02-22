@@ -1,0 +1,23 @@
+{
+  "name": "dog-catalog-wepapp",
+  "version": "1.0.0",
+  "description": "Fullstack of Dog Catalog",
+  "main": "index.js",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start",
+    "dev:backend": "cd backend && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csalinas14/Dog-Catalog-WebApp.git"
+  },
+  "author": "Carlos S",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csalinas14/Dog-Catalog-WebApp/issues"
+  },
+  "homepage": "https://github.com/csalinas14/Dog-Catalog-WebApp#readme"
+}
