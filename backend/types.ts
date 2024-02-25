@@ -23,7 +23,7 @@ const BaseBreedSchema = z.object({
   weight: weightSchema,
   name: z.string(),
   life_span: z.string(),
-  reference_image_id: z.string(),
+  reference_image_id: z.string().optional(),
   origin: z.string(),
   temperament: z.string()
 });
@@ -36,8 +36,40 @@ const DogBreedSchema = BaseBreedSchema.extend({
   height: weightSchema
 });
 
+const urlMessage = { message: 'Not a valid url' };
+
 const CatBreedSchema = BaseBreedSchema.extend({
-  type: z.literal('cat')
+  type: z.literal('cat'),
+  id: z.string(),
+  cfa_url: z.string().url(urlMessage).optional(),
+  vetstreet_url: z.string().url(urlMessage).optional(),
+  vcahospitals_url: z.string().url(urlMessage).optional(),
+  country_codes: z.string(),
+  description: z.string(),
+  indoor: z.number(),
+  lap: z.number().optional(),
+  alt_names: z.string(),
+  adaptability: z.number(),
+  affection_level: z.number(),
+  child_friendly: z.number(),
+  dog_friendly: z.number(),
+  energy_level: z.number(),
+  grooming: z.number(),
+  health_issues: z.number(),
+  intelligence: z.number(),
+  shedding_level: z.number(),
+  social_needs: z.number(),
+  stranger_friendly: z.number(),
+  vocalisation: z.number(),
+  experimental: z.number(),
+  hairless: z.number(),
+  natural: z.number(),
+  rare: z.number(),
+  rex: z.number(),
+  suppressed_tail: z.number(),
+  short_legs: z.number(),
+  wikipedia_url: z.string().url(),
+  hypoallergenic: z.number()
 });
 
 const BreedSchema = z.discriminatedUnion('type', [
@@ -48,7 +80,9 @@ const BreedSchema = z.discriminatedUnion('type', [
 export type Breed = z.infer<typeof BreedSchema>;
 
 export const isBreed = (obj: unknown): obj is Breed => {
-  if (!BreedSchema.safeParse(obj).success) {
+  const parsedObj = BreedSchema.safeParse(obj);
+  if (!parsedObj.success) {
+    console.error(parsedObj.error.message);
     return false;
   }
   return true;
@@ -75,8 +109,30 @@ interface CatBreed extends BaseBreed {
 //shared cat and dog type are described as breeds for API calls
 //export type Breed = DogBreed | CatBreed;
 
-export interface BreedQuery {
+export interface BaseQuery {
   limit: string;
   page: string;
   animal: 'dog' | 'cat';
 }
+
+const ImageSchema = z.object({
+  id: z.string(),
+  url: z.string().url(),
+  width: z.number(),
+  height: z.number()
+});
+
+export type Image = z.infer<typeof ImageSchema>;
+
+export interface ImagesQuery extends BaseQuery {
+  id: string;
+}
+
+export const isImage = (obj: unknown): obj is Breed => {
+  const parsedObj = ImageSchema.safeParse(obj);
+  if (!parsedObj.success) {
+    console.error(parsedObj.error.message);
+    return false;
+  }
+  return true;
+};

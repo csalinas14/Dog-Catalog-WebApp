@@ -1,11 +1,24 @@
-import { Breed, isBreed, BreedQuery } from '../types';
+import {
+  Breed,
+  isBreed,
+  BaseQuery,
+  ImagesQuery,
+  Image,
+  isImage
+} from '../types';
 import axios from 'axios';
 
-const API_KEY = process.env.DOG_API_KEY;
+//const API_KEY = process.env.DOG_API_KEY;
 const API_URL_FIRST = 'https://api.the';
 const API_URL_SECOND = 'api.com/v1/';
 
-const getBreeds = async (query: BreedQuery): Promise<Breed[]> => {
+const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
+  let API_KEY;
+  if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
+  else if (query.animal === 'cat') API_KEY = process.env.CAT_API_KEY;
+  else {
+    throw new Error('incorrect animal');
+  }
   const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}breeds?limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
 
   const config = {
@@ -14,9 +27,11 @@ const getBreeds = async (query: BreedQuery): Promise<Breed[]> => {
   };
 
   const { data } = await axios.request<Breed[]>(config);
+  //console.log(headers);
 
   data.forEach((obj) => {
     obj.type = query.animal;
+    console.log(obj);
     if (!isBreed(obj)) throw new Error('Incompatiable third party breed data');
   });
   //console.log(data);
@@ -25,6 +40,33 @@ const getBreeds = async (query: BreedQuery): Promise<Breed[]> => {
   return data;
 };
 
+const getImages = async (query: ImagesQuery): Promise<Image[]> => {
+  let API_KEY;
+  if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
+  else if (query.animal === 'cat') API_KEY = process.env.CAT_API_KEY;
+  else {
+    throw new Error('incorrect animal');
+  }
+
+  const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?breeds_id=${query.id}limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
+
+  const config = {
+    method: 'get',
+    url: url_call
+  };
+
+  const { data } = await axios.request<Image[]>(config);
+
+  data.forEach((obj) => {
+    console.log(obj);
+    if (!isImage(obj)) throw new Error('Invalid image type');
+    return;
+  });
+
+  return data;
+};
+
 export default {
-  getBreeds
+  getBreeds,
+  getImages
 };
