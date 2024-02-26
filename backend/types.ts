@@ -79,7 +79,7 @@ const BreedSchema = z.discriminatedUnion('type', [
 
 export type Breed = z.infer<typeof BreedSchema>;
 
-export const isBreed = (obj: unknown): obj is Breed => {
+export const isBreed = (obj: unknown) => {
   const parsedObj = BreedSchema.safeParse(obj);
   if (!parsedObj.success) {
     console.error(parsedObj.error.message);
@@ -128,7 +128,7 @@ export interface ImagesQuery extends BaseQuery {
   id: string;
 }
 
-export const isImage = (obj: unknown): obj is Breed => {
+export const isImage = (obj: unknown) => {
   const parsedObj = ImageSchema.safeParse(obj);
   if (!parsedObj.success) {
     console.error(parsedObj.error.message);

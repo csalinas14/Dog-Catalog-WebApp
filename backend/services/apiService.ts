@@ -9,9 +9,11 @@ import {
 import axios from 'axios';
 
 //const API_KEY = process.env.DOG_API_KEY;
+//Broke up API URL so I could apply dog or cat for their respective api url calls
 const API_URL_FIRST = 'https://api.the';
 const API_URL_SECOND = 'api.com/v1/';
 
+//third party api call to get breed info on cats or dogs
 const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
   let API_KEY;
   if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
@@ -27,7 +29,6 @@ const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
   };
 
   const { data } = await axios.request<Breed[]>(config);
-  //console.log(headers);
 
   data.forEach((obj) => {
     obj.type = query.animal;
@@ -40,6 +41,7 @@ const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
   return data;
 };
 
+//third party api call to get images of a particular breed
 const getImages = async (query: ImagesQuery): Promise<Image[]> => {
   let API_KEY;
   if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;

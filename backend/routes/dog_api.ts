@@ -36,7 +36,6 @@ router.get(
           page: req.query.page,
           id: req.query.id
         });
-        //console.log(res.header);
         res.send(data);
       } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';
