@@ -8,7 +8,8 @@
     "tsc": "tsc",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "migration:down": "ts-node-dev utils/rollback.ts"
   },
   "author": "Carlos S",
   "license": "ISC",
@@ -23,6 +24,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@types/sequelize": "^4.28.20",
+    "@types/umzug": "^2.3.7",
     "axios": "^1.6.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -30,6 +33,7 @@
     "express-async-errors": "^3.1.1",
     "pg": "^8.11.3",
     "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2",
     "umzug": "^3.7.0",
     "zod": "^3.22.4"
   }
