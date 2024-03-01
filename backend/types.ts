@@ -14,6 +14,7 @@ interface BaseBreed {
   temperament: string;
   needed: number;
 }*/
+//types built with zod when using third-party api
 const weightSchema = z.object({
   imperial: z.string(),
   metric: z.string()
@@ -136,3 +137,14 @@ export const isImage = (obj: unknown) => {
   }
   return true;
 };
+
+export interface User {
+  id: string;
+  username: string;
+  passwordHash: string;
+  name: string;
+}
+
+export type NonSensitiveUser = Omit<User, 'password'>;
+
+export type NewUser = Omit<User, 'id'>;

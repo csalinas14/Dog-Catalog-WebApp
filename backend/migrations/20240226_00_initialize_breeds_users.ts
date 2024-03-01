@@ -13,10 +13,46 @@ export const up: Migration = async ({ context: sequelize }) => {
       allowNull: false
     }
   });
+  await sequelize.getQueryInterface().createTable('users', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    username: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    disabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    passwordHash: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
+  });
 };
 
 export const down: Migration = async ({ context: sequelize }) => {
   await sequelize.getQueryInterface().dropTable('breeds');
+  await sequelize.getQueryInterface().dropTable('users');
 };
 /*
 module.exports = {
