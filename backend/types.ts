@@ -138,13 +138,21 @@ export const isImage = (obj: unknown) => {
   return true;
 };
 
-export interface User {
-  id: string;
+//types for users
+export interface UserEntry {
+  id: number;
   username: string;
   passwordHash: string;
   name: string;
 }
 
-export type NonSensitiveUser = Omit<User, 'password'>;
+export type NonSensitiveUser = Omit<UserEntry, 'passwordHash'>;
 
-export type NewUser = Omit<User, 'id'>;
+export type PreDatabaseUser = Omit<UserEntry, 'id'>;
+
+//wanted new users to have password property over passwordHash for clarity
+interface NewUserPartial extends UserEntry {
+  password: string;
+}
+
+export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>;

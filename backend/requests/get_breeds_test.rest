@@ -1,1 +1,1 @@
-GET https://api.thedogapi.com/v1/images/search?breed_ids=2&has_breeds=true&limit=1&api_key={{$processEnv process environment DOG_API_URL}}
+GET https://api.thedogapi.com/v1/images/search?breed_ids=2&has_breeds=true&limit=1&api_key={{$processEnv process environment DOG_API_KEY}}

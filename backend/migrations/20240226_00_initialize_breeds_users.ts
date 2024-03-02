@@ -35,7 +35,7 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    passwordHash: {
+    password_hash: {
       type: DataTypes.STRING,
       allowNull: false
     },

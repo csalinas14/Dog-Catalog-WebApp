@@ -5,11 +5,11 @@ export const toNewUser = (object: unknown): NewUser => {
     throw new Error('Incorrect or missing data');
   }
 
-  if ('name' in object && 'username' in object && 'passwordHash' in object) {
+  if ('name' in object && 'username' in object && 'password' in object) {
     const newUser: NewUser = {
       name: parseString(object.name, 'name'),
       username: parseString(object.username, 'username'),
-      passwordHash: parseString(object.passwordHash, 'passwordHash')
+      password: parseString(object.password, 'password')
     };
 
     return newUser;

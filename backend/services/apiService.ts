@@ -22,7 +22,7 @@ const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
     throw new Error('incorrect animal');
   }
   const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}breeds?limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
-
+  console.log(url_call);
   const config = {
     method: 'get',
     url: url_call
