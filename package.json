@@ -8,7 +8,8 @@
     "install:backend": "cd backend && npm install",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
-    "dev:backend": "cd backend && npm run dev"
+    "dev:backend": "cd backend && npm run dev",
+    "lint:backend": "cd backend && npm run lint"
   },
   "repository": {
     "type": "git",
