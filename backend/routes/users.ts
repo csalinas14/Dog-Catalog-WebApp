@@ -18,6 +18,7 @@ router.post('/', (async (req, res) => {
     //handling hashing the password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(newUser.password, saltRounds);
+    console.log('test');
     const newUserWithHash: PreDatabaseUser = {
       username: newUser.username,
       passwordHash: passwordHash,
