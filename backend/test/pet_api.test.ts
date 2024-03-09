@@ -2,7 +2,7 @@ import app from '../index';
 import request from 'supertest';
 
 describe('Handling Dog and Cat API calls', () => {
-  test('standard dog/cat api call is fuctional', async () => {
+  test('standard dog/cat api call is functional', async () => {
     const queryOptions = {
       animal: 'dog',
       limit: '1',
