@@ -6,7 +6,7 @@ import 'express-async-errors';
 import middleware from './utils/middleware';
 import dotenv from 'dotenv';
 dotenv.config();
-import { connectToDatabase } from './utils/db';
+//import { connectToDatabase } from './utils/db';
 
 const app = express();
 app.use(express.json());
@@ -17,6 +17,7 @@ app.use('/api/users', userRouter);
 
 app.use(middleware.errorHandler);
 
+/** 
 const start = async () => {
   await connectToDatabase();
   app.listen(process.env.PORT, () => {
@@ -29,4 +30,7 @@ app.listen(process.env.PORT, () => {
   console.log('Server running on port 3001');
 });*/
 
-void start();
+//void start();
+
+//for testing
+export default app;
