@@ -50,15 +50,14 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
     throw new Error('incorrect animal');
   }
 
-  const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?breeds_id=${query.id}limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
-
+  const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?has_breeds=true&limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
   const config = {
     method: 'get',
     url: url_call
   };
 
   const { data } = await axios.request<Image[]>(config);
-
+  console.log(data);
   data.forEach((obj) => {
     console.log(obj);
     if (!isImage(obj)) throw new Error('Invalid image type');

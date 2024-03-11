@@ -4,12 +4,24 @@ services:
   db:
     image: postgres
     environment:
+      POSTGRES_DB: pet-website-dev
       POSTGRES_PASSWORD: example
     ports:
       - 5432:5432
     volumes:
       - ./postgres_data:/data/db
     container_name: petcatalog-db-dev
+
+  db-test:
+    image: postgres
+    environment:
+      POSTGRES_DB: pet-website-test
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5430:5432
+    volumes:
+      - ./postgres_data/data-test:/data/db
+    container_name: petcatalog-db-test
 
   server:
     image: petcatalog-backend-dev
@@ -24,10 +36,12 @@ services:
     environment:
       - DOG_API_KEY=${DOG_API_KEY}
       - CAT_API_KEY=${CAT_API_KEY}
-      - DATABASE_URL_DEV=postgres://postgres:example@db:5432/postgres
+      - DATABASE_URL_DEV=postgres://postgres:example@db:5432/pet-website-dev
+      - DATABASE_URL_TEST=postgres://postgres:example@db-test:5432/pet-website-test
     container_name: petcatalog-backend-dev
     depends_on:
       - db
+      - db-test
 
   migration:
     build:
@@ -48,7 +62,30 @@ services:
       - db
     env_file: .env
     environment:
-      - DATABASE_URL_DEV=postgres://postgres:example@db:5432/postgres
+      - DATABASE_URL_DEV=postgres://postgres:example@db:5432/pet-website-dev
     container_name: petcatalog-migration-dev
+
+  migration-test:
+    image: migration-test-petcatalog
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    command:
+      [
+        './wait-for-it/wait-for-it.sh',
+        'db-test:5432',
+        '--',
+        'npm',
+        'run',
+        'migration-test:up'
+      ]
+    links:
+      - db-test
+    depends_on:
+      - db-test
+    env_file: .env
+    environment:
+      - DATABASE_URL_TEST=postgres://postgres:example@db-test:5432/pet-website-test
+    container_name: petcatalog-migration-test
   debug-helper:
     image: busybox
