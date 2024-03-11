@@ -36,6 +36,9 @@ jobs:
         run: npm run test:backend
         env:
           DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/postgres
+          DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/postgres
+          DOG_API_KEY: ${{ secrets.DOG_API_KEY }}
+          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
 
   tag_release:
     needs: [backend-tests]
