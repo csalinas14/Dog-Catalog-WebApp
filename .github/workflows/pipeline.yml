@@ -36,6 +36,7 @@ jobs:
         run: npm run test:backend
         env:
           DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/postgres
+          DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/postgres
 
   tag_release:
     needs: [backend-tests]
