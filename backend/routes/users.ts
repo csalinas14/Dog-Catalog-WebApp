@@ -14,11 +14,9 @@ router.get('/', (async (_req, res) => {
 router.post('/', (async (req, res) => {
   try {
     const newUser = toNewUser(req.body);
-
     //handling hashing the password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(newUser.password, saltRounds);
-    console.log('test');
     const newUserWithHash: PreDatabaseUser = {
       username: newUser.username,
       passwordHash: passwordHash,
@@ -31,6 +29,7 @@ router.post('/', (async (req, res) => {
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
     }
+    console.log(errorMessage);
     res.status(400).send(errorMessage);
   }
 }) as RequestHandler);

@@ -1,3 +1,4 @@
+import { Model, Optional } from 'sequelize';
 import z from 'zod';
 
 //a base type for breed data shared between cats and dogs
@@ -144,15 +145,36 @@ export interface UserEntry {
   username: string;
   passwordHash: string;
   name: string;
+  disabled?: boolean;
 }
 
 export type NonSensitiveUser = Omit<UserEntry, 'passwordHash'>;
 
-export type PreDatabaseUser = Omit<UserEntry, 'id'>;
+export interface PreDatabaseUser extends Optional<UserEntry, 'id'> {}
 
 //wanted new users to have password property over passwordHash for clarity
 interface NewUserPartial extends UserEntry {
   password: string;
 }
-
+//used for taking unknown new user requests
 export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>;
+
+//type for our User Model
+export interface UserInstance
+  extends Model<UserEntry, PreDatabaseUser>,
+    UserEntry {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+//type for Sessions Model
+interface SessionEntry {
+  id: number;
+  token: string;
+  userId: number;
+}
+
+export interface SessionInstance extends Model<SessionEntry>, SessionEntry {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
