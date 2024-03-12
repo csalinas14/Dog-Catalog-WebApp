@@ -33,6 +33,9 @@ jobs:
         run: npm run install:backend
       - name: Run migrations
         run: npm run migrations
+        env:
+          DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/pet-website-test
+          DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/pet-website-test
       - name: Check style
         run: npm run lint:backend
       - name: Run backend tests
