@@ -1,12 +1,12 @@
 import { User } from '../models';
-import { PreDatabaseUser } from '../types';
+import { PreDatabaseUser, UserInstance } from '../types';
 
 const addUser = async (newUser: PreDatabaseUser) => {
   const user = await User.create(newUser);
   return user;
 };
 
-const getUsers = async () => {
+const getUsers = async (): Promise<UserInstance[]> => {
   const users = await User.findAll({});
   return users;
 };

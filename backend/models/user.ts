@@ -1,10 +1,10 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 import { sequelize } from '../utils/db';
+import { UserInstance } from '../types';
 
-class User extends Model {}
-
-User.init(
+const User = sequelize.define<UserInstance>(
+  'User',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -33,7 +33,6 @@ User.init(
     }
   },
   {
-    sequelize,
     underscored: true,
     timestamps: true,
     modelName: 'user'
