@@ -31,12 +31,12 @@ jobs:
           node-version: '16'
       - name: Install dependencies
         run: npm run install:backend
+      - name: Run migrations
+        run: npm run migrations
       - name: Check style
         run: npm run lint:backend
       - name: Run backend tests
         run: npm run test:backend
-      - name: Run migrations
-        run: npm run migrations
         env:
           DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/pet-website-test
           DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/pet-website-test
