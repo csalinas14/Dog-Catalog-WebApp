@@ -15,6 +15,7 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_DB: pet-website-test
           POSTGRES_PASSWORD: example
         options: >-
           --health-cmd pg_isready
@@ -34,9 +35,11 @@ jobs:
         run: npm run lint:backend
       - name: Run backend tests
         run: npm run test:backend
+      - name: Run migrations
+        run: npm run migrations
         env:
-          DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/postgres
-          DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/postgres
+          DATABASE_URL_DEV: postgres://postgres:example@localhost:5432/pet-website-test
+          DATABASE_URL_TEST: postgres://postgres:example@localhost:5432/pet-website-test
           DOG_API_KEY: ${{ secrets.DOG_API_KEY }}
           CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
 
