@@ -1,4 +1,8 @@
 import Breed from './breed';
 import User from './user';
+import Session from './sessions';
 
-export { Breed, User };
+User.hasMany(Session);
+Session.belongsTo(User);
+
+export { Breed, User, Session };

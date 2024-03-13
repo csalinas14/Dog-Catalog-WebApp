@@ -1,5 +1,31 @@
-//import { DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
-//import { sequelize } from '../utils/db';
+import { sequelize } from '../utils/db';
+import { SessionInstance } from '../types';
 
-//const Session.define<>
+const Session = sequelize.define<SessionInstance>(
+  'Session',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    token: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'users', key: 'id' }
+    }
+  },
+  {
+    underscored: true,
+    timestamps: true,
+    modelName: 'session'
+  }
+);
+
+export default Session;
