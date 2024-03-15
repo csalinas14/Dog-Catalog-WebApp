@@ -1,0 +1,9 @@
+POST https://api.thecatapi.com/v1/favourites HTTP/1.1
+content-type: application/json
+x-api-key: #add api key
+Content-Length: 49
+
+{
+  "image_id": "B1ERTmgph",
+  "sub_id": "1"
+}

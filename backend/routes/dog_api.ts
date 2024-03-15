@@ -2,6 +2,8 @@ import express from 'express';
 import apiService from '../services/apiService';
 import { BaseQuery, ImagesQuery } from '../types';
 import { Request } from 'express';
+import { toNewFavorite } from '../utils';
+import middleware from '../utils/middleware';
 
 const router = express.Router();
 
@@ -48,5 +50,19 @@ router.get(
     // prettier-ignore-end
   }
 );
+
+router.post('/favorites', middleware.tokenExtractor, async (req, res) => {
+  try {
+    const newFav = toNewFavorite(req.body);
+    console.log(newFav);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+    res.status(400).send(errorMessage);
+  }
+});
 
 export default router;

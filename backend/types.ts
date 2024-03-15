@@ -148,7 +148,9 @@ export interface UserEntry {
   disabled?: boolean;
 }
 
-export type NonSensitiveUser = Omit<UserEntry, 'passwordHash'>;
+export type NonSensitiveUser = Omit<UserEntry, 'passwordHash' | 'disabled'>;
+
+export type UserToken = Omit<NonSensitiveUser, 'name'>;
 
 export interface PreDatabaseUser extends Optional<UserEntry, 'id'> {}
 
@@ -184,4 +186,15 @@ export interface SessionInstance
     SessionEntry {
   createdAt?: Date;
   updatedAt?: Date;
+}
+export enum AnimalType {
+  'dog' = 0,
+  'cat' = 1
+}
+
+//types for Favorites
+export interface NewFavorite {
+  image_id: string;
+  sub_id: string;
+  animal: AnimalType;
 }

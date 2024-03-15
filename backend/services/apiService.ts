@@ -5,6 +5,7 @@ import {
   ImagesQuery,
   Image,
   isImage
+  //NewFavorite
 } from '../types';
 import axios from 'axios';
 
@@ -66,6 +67,10 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
 
   return data;
 };
+
+//const addFavorite = (favorite: NewFavorite) => {
+
+//};
 
 export default {
   getBreeds,
