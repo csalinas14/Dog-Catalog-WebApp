@@ -1,0 +1,8 @@
+GET http://localhost:3001/api/dogapi/favorites HTTP/1.1
+Authorization: # add token
+content-type: application/json
+
+{
+  "image_id": "GQ61BDToD",
+  "animal": 1
+}

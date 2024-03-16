@@ -33,10 +33,10 @@ export const toNewFavorite = (object: unknown): NewFavorite => {
     throw new Error('Incorrect or missing data');
   }
 
-  if ('image_id' in object && 'sub_id' in object && 'animal' in object) {
+  if ('image_id' in object && 'animal' in object) {
     const newFav: NewFavorite = {
       image_id: parseString(object.image_id, 'image_id'),
-      sub_id: parseString(object.sub_id, 'sub_id'),
+      //sub_id: parseString(object.sub_id, 'sub_id'),
       animal: parseAnimalType(object.animal)
     };
 

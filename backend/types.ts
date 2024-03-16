@@ -195,6 +195,6 @@ export enum AnimalType {
 //types for Favorites
 export interface NewFavorite {
   image_id: string;
-  sub_id: string;
+  //sub_id: string;
   animal: AnimalType;
 }
