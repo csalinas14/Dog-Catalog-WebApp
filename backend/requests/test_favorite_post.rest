@@ -4,6 +4,5 @@ content-type: application/json
 
 {
   "image_id": "GQ61BDToD",
-  "sub_id": "2",
   "animal": 1
 }

@@ -1,11 +1,13 @@
+import { Request } from 'express';
 import {
   Breed,
   isBreed,
   BaseQuery,
   ImagesQuery,
   Image,
-  isImage
-  //NewFavorite
+  isImage,
+  NewFavorite,
+  AnimalType
 } from '../types';
 import axios from 'axios';
 
@@ -68,11 +70,78 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
   return data;
 };
 
-//const addFavorite = (favorite: NewFavorite) => {
+const addFavorite = async (
+  favorite: NewFavorite,
+  user_id: string | undefined
+) => {
+  let API_KEY;
+  let animal;
+  switch (favorite.animal) {
+    case AnimalType.dog:
+      API_KEY = process.env.DOG_API_KEY;
+      animal = 'dog';
+      break;
+    case AnimalType.cat:
+      API_KEY = process.env.CAT_API_KEY;
+      animal = 'cat';
+      break;
+    default:
+      throw new Error('incorrect animal');
+  }
 
-//};
+  const url_call = `${API_URL_FIRST}${animal}${API_URL_SECOND}favourites`;
+  const config = {
+    method: 'post',
+    url: url_call,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY
+    },
+    data: {
+      image_id: favorite.image_id,
+      sub_id: user_id
+    }
+  };
+
+  const response = await axios.request(config);
+
+  return response;
+};
+
+const getFavorites = async (request: Request) => {
+  let API_KEY;
+  let animal;
+  switch (request.body.animal) {
+    case AnimalType.dog:
+      API_KEY = process.env.DOG_API_KEY;
+      animal = 'dog';
+      break;
+    case AnimalType.cat:
+      API_KEY = process.env.CAT_API_KEY;
+      animal = 'cat';
+      break;
+    default:
+      throw new Error('incorrect animal');
+  }
+
+  const url_call = `${API_URL_FIRST}${animal}${API_URL_SECOND}favourites?sub_id=${request.user?.id}`;
+  const config = {
+    method: 'get',
+    url: url_call,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY
+    }
+  };
+
+  const response = await axios.request(config);
+
+  return response;
+};
 
 export default {
   getBreeds,
-  getImages
+  getImages,
+  addFavorite,
+  getFavorites
 };
