@@ -1,9 +1,8 @@
 POST http://localhost:3001/api/dogapi/favorites HTTP/1.1
-Authorization: #add token
+Authorization: # add token
 content-type: application/json
 
 {
   "image_id": "GQ61BDToD",
-  "sub_id": "2",
   "animal": 1
 }

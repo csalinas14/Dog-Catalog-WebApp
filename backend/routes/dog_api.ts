@@ -54,7 +54,11 @@ router.get(
 router.post('/favorites', middleware.tokenExtractor, async (req, res) => {
   try {
     const newFav = toNewFavorite(req.body);
-    console.log(newFav);
+    const response = await apiService.addFavorite(
+      newFav,
+      req.user?.id.toString()
+    );
+    res.send(response.data);
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';
     if (error instanceof Error) {
