@@ -7,9 +7,12 @@ import {
   Image,
   isImage,
   NewFavorite,
-  AnimalType
+  AnimalType,
+  CreateFavorite,
+  isCreateFavorite
 } from '../types';
 import axios from 'axios';
+import { Favorite } from '../models';
 
 //const API_KEY = process.env.DOG_API_KEY;
 //Broke up API URL so I could apply dog or cat for their respective api url calls
@@ -70,18 +73,15 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
   return data;
 };
 
-const addFavorite = async (
-  favorite: NewFavorite,
-  user_id: string | undefined
-) => {
+const addFavorite = async (favorite: NewFavorite, user_id: number) => {
   let API_KEY;
   let animal;
   switch (favorite.animal) {
-    case AnimalType.dog:
+    case AnimalType.DOG:
       API_KEY = process.env.DOG_API_KEY;
       animal = 'dog';
       break;
-    case AnimalType.cat:
+    case AnimalType.CAT:
       API_KEY = process.env.CAT_API_KEY;
       animal = 'cat';
       break;
@@ -99,24 +99,33 @@ const addFavorite = async (
     },
     data: {
       image_id: favorite.image_id,
-      sub_id: user_id
+      sub_id: user_id.toString()
     }
   };
 
-  const response = await axios.request(config);
-
-  return response;
+  const { data } = await axios.request<CreateFavorite>(config);
+  console.log(data);
+  if (!isCreateFavorite(data) || data.message !== 'SUCCESS')
+    throw new Error('Incompatiable third party breed data');
+  const newFav = {
+    favorite_id: data.id,
+    userId: user_id,
+    animal: favorite.animal
+  };
+  console.log(newFav);
+  await Favorite.create(newFav);
+  return data;
 };
 
 const getFavorites = async (request: Request) => {
   let API_KEY;
   let animal;
   switch (request.body.animal) {
-    case AnimalType.dog:
+    case AnimalType.DOG:
       API_KEY = process.env.DOG_API_KEY;
       animal = 'dog';
       break;
-    case AnimalType.cat:
+    case AnimalType.CAT:
       API_KEY = process.env.CAT_API_KEY;
       animal = 'cat';
       break;
@@ -139,9 +148,61 @@ const getFavorites = async (request: Request) => {
   return response;
 };
 
+const delFavorite = async (request: Request) => {
+  let API_KEY;
+  //let animal;
+
+  const fav = await Favorite.findOne({
+    where: {
+      favorite_id: parseInt(request.params.id)
+    }
+  });
+
+  console.log(fav);
+
+  if (!(fav && fav.userId === request.user?.id))
+    throw new Error('Incorrect user or favorite not found');
+
+  switch (fav.animal) {
+    case AnimalType.DOG:
+      API_KEY = process.env.DOG_API_KEY;
+      //animal = 'dog';
+      break;
+    case AnimalType.CAT:
+      API_KEY = process.env.CAT_API_KEY;
+      //animal = 'cat';
+      break;
+    default:
+      throw new Error('incorrect animal');
+  }
+
+  const url_call = `${API_URL_FIRST}${fav.animal}${API_URL_SECOND}favourites/${request.params.id}`;
+  const config = {
+    method: 'delete',
+    url: url_call,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY
+    }
+  };
+
+  const response = await axios.request(config);
+
+  if (response && response.data.message === 'SUCCESS') {
+    await Favorite.destroy({
+      where: {
+        favorite_id: parseInt(request.params.id)
+      }
+    });
+  }
+
+  return response;
+};
+
 export default {
   getBreeds,
   getImages,
   addFavorite,
-  getFavorites
+  getFavorites,
+  delFavorite
 };

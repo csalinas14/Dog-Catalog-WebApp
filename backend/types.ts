@@ -187,9 +187,10 @@ export interface SessionInstance
   createdAt?: Date;
   updatedAt?: Date;
 }
+
 export enum AnimalType {
-  'dog' = 0,
-  'cat' = 1
+  DOG = 'dog',
+  CAT = 'cat'
 }
 
 //types for Favorites
@@ -198,3 +199,35 @@ export interface NewFavorite {
   //sub_id: string;
   animal: AnimalType;
 }
+
+interface FavoriteEntry {
+  id: number;
+  favorite_id: number;
+  userId: number;
+  animal: AnimalType;
+}
+
+export interface PreDatabaseFavorite extends Optional<FavoriteEntry, 'id'> {}
+
+export interface FavoriteInstance
+  extends Model<FavoriteEntry, PreDatabaseFavorite>,
+    FavoriteEntry {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const PostFavoriteSchema = z.object({
+  message: z.string(),
+  id: z.number()
+});
+
+export type CreateFavorite = z.infer<typeof PostFavoriteSchema>;
+
+export const isCreateFavorite = (obj: unknown) => {
+  const parsedObj = PostFavoriteSchema.safeParse(obj);
+  if (!parsedObj.success) {
+    console.error(parsedObj.error.message);
+    return false;
+  }
+  return true;
+};
