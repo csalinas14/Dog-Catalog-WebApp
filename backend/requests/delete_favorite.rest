@@ -1,2 +1,2 @@
-DELETE  https://api.thecatapi.com/v1/favourites/232449211 HTTP/1.1
-x-api-key: #add api key
+DELETE  https://api.thecatapi.com/v1/favourites/232452960 HTTP/1.1
+x-api-key: #add key

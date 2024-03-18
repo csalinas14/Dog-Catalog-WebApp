@@ -56,9 +56,9 @@ router.post('/favorites', middleware.tokenExtractor, async (req, res) => {
     const newFav = toNewFavorite(req.body);
     const response = await apiService.addFavorite(
       newFav,
-      req.user?.id.toString()
+      req.user?.id as number
     );
-    res.send(response.data);
+    res.send(response);
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';
     if (error instanceof Error) {
@@ -72,6 +72,21 @@ router.post('/favorites', middleware.tokenExtractor, async (req, res) => {
 router.get('/favorites', middleware.tokenExtractor, async (req, res) => {
   try {
     const response = await apiService.getFavorites(req);
+    res.send(response.data);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+    res.status(400).send(errorMessage);
+  }
+});
+
+router.delete('/favorites/:id', middleware.tokenExtractor, async (req, res) => {
+  try {
+    const response = await apiService.delFavorite(req);
+    console.log(response);
     res.send(response.data);
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong.';

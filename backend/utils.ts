@@ -46,19 +46,17 @@ export const toNewFavorite = (object: unknown): NewFavorite => {
 };
 
 const parseAnimalType = (animal: unknown): AnimalType => {
-  if (!isNumber(animal) || !isAnimalType(animal)) {
+  if (!isString(animal) || !isAnimalType(animal)) {
     throw new Error('Incorrect or missing AnimalType');
   }
 
   return animal;
 };
 
-const isAnimalType = (param: number): param is AnimalType => {
-  return Object.values(AnimalType)
-    .map((a) => a)
-    .includes(param);
+const isAnimalType = (param: string): param is AnimalType => {
+  return Object.values(AnimalType).includes(param as AnimalType);
 };
 
-const isNumber = (num: unknown): num is number => {
-  return typeof num === 'number' || num instanceof Number;
-};
+//const isNumber = (num: unknown): num is number => {
+//return typeof num === 'number' || num instanceof Number;
+//};
