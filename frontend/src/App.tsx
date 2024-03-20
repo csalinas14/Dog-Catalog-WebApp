@@ -6,6 +6,8 @@ import './index.css'
 import LandingPage from './components/LandingPage'
 import Navbar from './components/Navbar'
 
+console.log('app')
+
 function App() {
   return (
     <div className='App'>
