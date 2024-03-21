@@ -34,7 +34,7 @@ const Navbar = () => {
       </div>
 
       <div className='navbar-center lg:hidden'>
-        <a className='btn btn-ghost text-xl'>Pet Catalog</a>
+        <a className='btn btn-ghost text-xl'>Dogs & Cats</a>
       </div>
 
       <div className='navbar-end '>
