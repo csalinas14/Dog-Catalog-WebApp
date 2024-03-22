@@ -21,6 +21,14 @@ const weightSchema = z.object({
   metric: z.string(),
 })
 
+//image object used for Breed and Image type later on
+const ImageSchema = z.object({
+  id: z.string(),
+  url: z.string().url(),
+  width: z.number(),
+  height: z.number(),
+})
+
 const BaseBreedSchema = z.object({
   weight: weightSchema,
   name: z.string(),
@@ -28,6 +36,7 @@ const BaseBreedSchema = z.object({
   reference_image_id: z.string().optional(),
   origin: z.string(),
   temperament: z.string(),
+  image: ImageSchema,
 })
 
 const DogBreedSchema = BaseBreedSchema.extend({
@@ -116,13 +125,6 @@ export interface BaseQuery {
   page: string
   animal: 'dog' | 'cat'
 }
-
-const ImageSchema = z.object({
-  id: z.string(),
-  url: z.string().url(),
-  width: z.number(),
-  height: z.number(),
-})
 
 export type Image = z.infer<typeof ImageSchema>
 
