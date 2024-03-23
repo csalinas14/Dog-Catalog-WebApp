@@ -1,8 +1,8 @@
 import { Breed } from '../../../../types'
 
-const DogBody = ({ breed }: { breed: Breed }) => {
+const CatBody = ({ breed }: { breed: Breed }) => {
   const test = (breed: Breed) => {
-    if ('type' in breed && breed.type === 'dog') {
+    if ('type' in breed && breed.type === 'cat') {
       return breed
     } else {
       throw new Error('Not the right animal type')
@@ -13,10 +13,8 @@ const DogBody = ({ breed }: { breed: Breed }) => {
     <div className='card-body '>
       <h2 className='card-title'>
         {breed.name}
-        {breedNarrowed.breed_group ? (
-          <div className='badge badge-secondary'>
-            {breedNarrowed.breed_group}
-          </div>
+        {breedNarrowed.origin ? (
+          <div className='badge badge-secondary'>{breedNarrowed.origin}</div>
         ) : (
           <></>
         )}
@@ -25,9 +23,6 @@ const DogBody = ({ breed }: { breed: Breed }) => {
       <div className='card-actions justify-start'>
         <div className='badge badge-outline'>{breed.life_span} years</div>
         <div className='badge badge-outline'>
-          {breedNarrowed.height.imperial} ft
-        </div>
-        <div className='badge badge-outline'>
           {breedNarrowed.weight.imperial} lbs
         </div>
       </div>
@@ -35,4 +30,4 @@ const DogBody = ({ breed }: { breed: Breed }) => {
   )
 }
 
-export default DogBody
+export default CatBody

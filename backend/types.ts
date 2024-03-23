@@ -1,5 +1,6 @@
 import { Model, Optional } from 'sequelize';
 import z from 'zod';
+//import { Breed } from './models';
 
 //a base type for breed data shared between cats and dogs
 /*
@@ -35,13 +36,14 @@ const BaseBreedSchema = z.object({
   life_span: z.string(),
   reference_image_id: z.string().optional(),
   origin: z.string().optional(),
-  temperament: z.string()
+  temperament: z.string().optional(),
+  image: ImageSchema.optional()
 });
 
 const DogBreedSchema = BaseBreedSchema.extend({
   type: z.literal('dog'),
   id: z.number(),
-  bred_for: z.string(),
+  bred_for: z.string().optional(),
   breed_group: z.string().optional(),
   height: weightSchema
 });
@@ -53,12 +55,12 @@ const CatBreedSchema = BaseBreedSchema.extend({
   id: z.string(),
   cfa_url: z.string().url(urlMessage).optional(),
   vetstreet_url: z.string().url(urlMessage).optional(),
-  vcahospitals_url: z.string().url(urlMessage).optional(),
+  vcahospitals_url: z.string().optional(),
   country_codes: z.string(),
   description: z.string(),
   indoor: z.number(),
   lap: z.number().optional(),
-  alt_names: z.string(),
+  alt_names: z.string().optional(),
   adaptability: z.number(),
   affection_level: z.number(),
   child_friendly: z.number(),
@@ -78,7 +80,7 @@ const CatBreedSchema = BaseBreedSchema.extend({
   rex: z.number(),
   suppressed_tail: z.number(),
   short_legs: z.number(),
-  wikipedia_url: z.string().url(),
+  wikipedia_url: z.string().url().optional(),
   hypoallergenic: z.number()
 });
 
@@ -88,6 +90,11 @@ const BreedSchema = z.discriminatedUnion('type', [
 ]);
 
 export type Breed = z.infer<typeof BreedSchema>;
+
+export interface BreedResponse {
+  totalCount: number;
+  breeds: Breed[];
+}
 
 export const isBreed = (obj: unknown) => {
   const parsedObj = BreedSchema.safeParse(obj);

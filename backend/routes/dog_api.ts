@@ -14,13 +14,13 @@ router.get(
 
     // prettier-ignore-start
     void (async () => {
-      const data = await apiService.getBreeds({
+      const { breeds, totalCount } = await apiService.getBreeds({
         animal: req.query.animal,
         limit: req.query.limit,
         page: req.query.page
       });
       //console.log(res.header);
-      res.send(data);
+      res.send({ breeds, totalCount });
     })();
     // prettier-ignore-end
   }

@@ -25,10 +25,10 @@ const Navbar = () => {
             className='menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52'
           >
             <li>
-              <a>Dogs</a>
+              <Link to='/dogs'>Dogs</Link>
             </li>
             <li>
-              <a>Cats</a>
+              <Link to='/cats'>Cats</Link>
             </li>
             <li>
               <a>Gallary</a>
@@ -39,7 +39,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link
-          className='btn btn-ghost text-xl hidden lg:flex lg:text-2xl'
+          className='btn btn-ghost hover:bg-inherit text-xl hidden lg:flex lg:text-2xl xl:text-5xl '
           to='/'
         >
           Dogs & Cats
@@ -53,12 +53,12 @@ const Navbar = () => {
       </div>
 
       <div className='navbar-end'>
-        <ul className='menu menu-horizontal px-1 hidden lg:flex lg:text-lg'>
+        <ul className='menu menu-horizontal px-1 hidden lg:flex lg:text-lg lg:px-3'>
           <li>
             <Link to='/dogs'>Dogs</Link>
           </li>
           <li>
-            <a>Cats</a>
+            <Link to='/cats'>Cats</Link>
           </li>
           <li>
             <a>Gallary</a>

@@ -5,7 +5,7 @@ import CardList from './CardList/cardList'
 import Pagination from './Pagination/pagination'
 import BreedSkeleton from './Skeleton/skeleton'
 
-const DogsPage = () => {
+const CatsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   let page = searchParams.get('page')
   let pageRequest
@@ -14,7 +14,7 @@ const DogsPage = () => {
     page = '1'
   } else pageRequest = (Number(page) - 1).toString()
   const { breedInfo, totalBreeds, isLoading, error } = useBreeds({
-    animal: 'dog',
+    animal: 'cat',
     page: pageRequest,
   })
   console.log(breedInfo)
@@ -37,4 +37,4 @@ const DogsPage = () => {
   )
 }
 
-export default DogsPage
+export default CatsPage

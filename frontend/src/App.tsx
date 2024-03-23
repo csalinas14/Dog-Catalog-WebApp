@@ -6,6 +6,7 @@ import './index.css'
 import LandingPage from './components/LandingPage'
 import Navbar from './components/Navbar'
 import DogsPage from './components/BreedsPage/dogs'
+import CatsPage from './components/BreedsPage/cats'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/dogs' element={<DogsPage />} />
+        <Route path='/cats' element={<CatsPage />} />
       </Routes>
     </div>
   )
