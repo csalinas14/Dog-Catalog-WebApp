@@ -9,7 +9,8 @@ import {
   NewFavorite,
   AnimalType,
   CreateFavorite,
-  isCreateFavorite
+  isCreateFavorite,
+  BreedResponse
 } from '../types';
 import axios from 'axios';
 import { Favorite } from '../models';
@@ -20,7 +21,7 @@ const API_URL_FIRST = 'https://api.the';
 const API_URL_SECOND = 'api.com/v1/';
 
 //third party api call to get breed info on cats or dogs
-const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
+const getBreeds = async (query: BaseQuery): Promise<BreedResponse> => {
   let API_KEY;
   if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
   else if (query.animal === 'cat') API_KEY = process.env.CAT_API_KEY;
@@ -34,7 +35,8 @@ const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
     url: url_call
   };
 
-  const { data } = await axios.request<Breed[]>(config);
+  const { data, headers } = await axios.request<Breed[]>(config);
+  //console.log(headers['pagination-count']);
 
   data.forEach((obj) => {
     obj.type = query.animal;
@@ -44,7 +46,7 @@ const getBreeds = async (query: BaseQuery): Promise<Breed[]> => {
   //console.log(data);
   //const animal_data = data.map((d) => ({ ...d, type: animal } as Breed));
   //console.log(animal_data);
-  return data;
+  return { breeds: data, totalCount: headers['pagination-count'] as number };
 };
 
 //third party api call to get images of a particular breed

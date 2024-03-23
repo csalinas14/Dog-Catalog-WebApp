@@ -15,9 +15,9 @@ describe('Handling Dog and Cat API calls', () => {
       .expect('Content-Type', /application\/json/)
       .expect(200);
 
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0].id).toBe(1);
-    expect(response.body[0].type).toBe('dog');
+    expect(response.body.breeds).toHaveLength(1);
+    expect(response.body.breeds[0].id).toBe(1);
+    expect(response.body.breeds[0].type).toBe('dog');
 
     queryOptions.animal = 'cat';
     requestString = `/api/dogapi/breeds?animal=${queryOptions.animal}&limit=${queryOptions.limit}&page=${queryOptions.page}`;
@@ -26,8 +26,8 @@ describe('Handling Dog and Cat API calls', () => {
       .expect('Content-Type', /application\/json/)
       .expect(200);
 
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0].type).toBe('cat');
+    expect(response.body.breeds).toHaveLength(1);
+    expect(response.body.breeds[0].type).toBe('cat');
   });
   test('image api call for dog/cat is functional', async () => {
     const queryOptions = {
