@@ -20,10 +20,11 @@ const Card = ({ breed }: { breed: Breed }) => {
         return assertNever(breed)
     }
   }
+  const imageUrl = breed.image ? breed.image.url : undefined
   return (
     <div className='card max-w-md w-full justify-self-center bg-base-100 shadow-xl dark:bg-slate-50 dark:shadow-gray-500 dark:shadow-md'>
       <figure className='h-60 md:h-72'>
-        <img src={breed.image.url} alt='Pet' className='w-full h-full' />
+        <img src={imageUrl} alt={breed.type} className='w-full h-full' />
       </figure>
       <BodyType breed={breed} />
     </div>

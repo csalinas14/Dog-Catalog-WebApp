@@ -37,10 +37,10 @@ const LandingPage = () => {
   console.log(images)
 
   return (
-    <div className='w-full'>
+    <>
       <Hero />
       <CarouselImages images={images} />
-    </div>
+    </>
   )
 }
 

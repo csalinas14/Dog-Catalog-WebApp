@@ -10,7 +10,7 @@ import CatsPage from './components/BreedsPage/cats'
 
 function App() {
   return (
-    <div className='App'>
+    <div className='flex flex-col h-full'>
       <Navbar />
       <Routes>
         <Route path='/' element={<LandingPage />} />

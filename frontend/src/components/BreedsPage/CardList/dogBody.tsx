@@ -23,7 +23,7 @@ const DogBody = ({ breed }: { breed: Breed }) => {
       </h2>
       <p>{breed.temperament}</p>
       <div className='card-actions justify-start'>
-        <div className='badge badge-outline'>{breed.life_span} years</div>
+        <div className='badge badge-outline'>{breed.life_span}</div>
         <div className='badge badge-outline'>
           {breedNarrowed.height.imperial} ft
         </div>
