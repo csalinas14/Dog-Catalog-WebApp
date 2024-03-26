@@ -146,6 +146,12 @@ export const isImage = (obj: unknown) => {
   return true
 }
 
+export interface ImageResponse {
+  imageInfo: Image[]
+  isLoading: boolean
+  error?: string
+}
+
 //types for users
 export interface UserEntry {
   id: number

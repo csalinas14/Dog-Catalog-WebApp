@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage'
 import Navbar from './components/Navbar'
 import DogsPage from './components/BreedsPage/dogs'
 import CatsPage from './components/BreedsPage/cats'
+import GalleryPage from './components/GalleryPage'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/dogs' element={<DogsPage />} />
         <Route path='/cats' element={<CatsPage />} />
+        <Route path='/gallery' element={<GalleryPage />} />
       </Routes>
     </div>
   )

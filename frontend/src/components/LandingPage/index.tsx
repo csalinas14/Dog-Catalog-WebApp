@@ -1,45 +1,39 @@
-import { useState, useEffect } from 'react'
-import imageService from '../../services/images'
 import { Image } from '../../../types'
 import CarouselImages from './Images/image'
 import Hero from './Hero/index'
+import { useImages } from '../../hooks/useImages'
+import {
+  apiHeroCatImagesRequestLimit,
+  apiHeroDogImagesRequestLimit,
+} from '../../constants'
 
 const LandingPage = () => {
-  const [images, setImages] = useState<Image[]>([])
+  const catsResponse = useImages({
+    animal: 'cat',
+    page: '0',
+    limitNumber: apiHeroCatImagesRequestLimit,
+  })
 
-  useEffect(() => {
-    const fetchImageList = async () => {
-      const petObject = {
-        animal: 'dog' as const,
-        page: '0',
-        limit: '4',
-      }
-      const dogImages = await imageService.getImages(petObject)
-      const petObject2 = {
-        animal: 'cat' as const,
-        page: '0',
-        limit: '3',
-      }
-      const catImages = await imageService.getImages(petObject2)
+  const dogsResponse = useImages({
+    animal: 'dog',
+    page: '0',
+    limitNumber: apiHeroDogImagesRequestLimit,
+  })
 
-      const imageArray: Image[] = []
-      for (let i = 0; i < catImages.length; i++) {
-        imageArray.push(dogImages[i])
-        imageArray.push(catImages[i])
-      }
-      imageArray.push(dogImages[dogImages.length - 1])
-      setImages(imageArray)
-    }
+  const responses = [catsResponse, dogsResponse]
 
-    void fetchImageList()
-  }, [])
-
-  console.log(images)
+  const imageArray: Image[] = []
+  for (let i = 0; i < catsResponse.imageInfo.length; i++) {
+    imageArray.push(dogsResponse.imageInfo[i])
+    imageArray.push(catsResponse.imageInfo[i])
+  }
+  imageArray.push(dogsResponse.imageInfo[dogsResponse.imageInfo.length - 1])
+  console.log(imageArray)
 
   return (
     <>
       <Hero />
-      <CarouselImages images={images} />
+      <CarouselImages images={imageArray} responses={responses} />
     </>
   )
 }

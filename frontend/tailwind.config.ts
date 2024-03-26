@@ -2,7 +2,11 @@
 export default {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'cat-pattern': "url('/src/assets/overlapping-circles 2.svg')",
+      },
+    },
   },
   plugins: [require('daisyui')],
 }
