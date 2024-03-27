@@ -6,10 +6,14 @@ const GallaryImages = ({ imageResponse }: { imageResponse: ImageResponse }) => {
   const images: Image[] = imageResponse.imageInfo
   console.log(images)
   return (
-    <div className='columns-1 p-4 gap-4 h-full sm:columns-2'>
-      {images.map((img) => (
+    <div
+      role='tabpanel'
+      className='tab-content columns-1 p-4 gap-4 h-full sm:columns-2 md:columns-3 md:gap-8'
+    >
+      {images.map((img, i) => (
         <img
-          className='border-1 border-gray-500 rounded-xl mb-8'
+          key={img ? img.id : i}
+          className='border-1 border-gray-500 rounded-xl mb-8 shadow-md shadow-gray-500'
           src={img ? img.url : undefined}
           alt='Animal'
         />

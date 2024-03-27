@@ -18,7 +18,7 @@ const Hero = () => {
             catalog with all kinds of different dog and cat breeds. Find your
             favorite among all these adorable animals!
           </p>
-          <button className='btn btn-primary lg:text-lg xl:text-3xl xl:items-center xl:h-16'>
+          <button className='btn btn-accent lg:text-lg xl:text-3xl xl:items-center xl:h-16'>
             Get Started
           </button>
         </div>

@@ -14,9 +14,12 @@ const CarouselImages = ({
   return (
     <div className='carousel carousel-center space-x-4 p-4 bg-indigo-100'>
       {images.map((img) => (
-        <div className='carousel-item w-1/3 ' key={img ? img.id : undefined}>
+        <div
+          className='carousel-item w-4/5 md:w-3/5 lg:w-2/5'
+          key={img ? img.id : undefined}
+        >
           <img
-            className='object-fit border-1 border-gray-500 rounded-2xl'
+            className='aspect-[3/2] object-fit border-1 border-gray-500 rounded-2xl'
             src={img ? img.url : undefined}
             alt='Animal'
           />

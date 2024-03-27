@@ -2,7 +2,7 @@ export const apiBaseUrl = 'http://localhost:3001/api'
 
 export const apiBreedRequestLimit = 10
 
-export const apiGalleryImagesRequestLimit = 10
+export const apiGalleryImagesRequestLimit = 1
 
 export const apiHeroCatImagesRequestLimit = 3
 

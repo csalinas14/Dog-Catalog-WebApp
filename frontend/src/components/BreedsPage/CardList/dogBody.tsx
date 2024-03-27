@@ -14,7 +14,7 @@ const DogBody = ({ breed }: { breed: Breed }) => {
       <h2 className='card-title'>
         {breed.name}
         {breedNarrowed.breed_group ? (
-          <div className='badge badge-secondary'>
+          <div className='badge badge-lg badge-secondary'>
             {breedNarrowed.breed_group}
           </div>
         ) : (
@@ -22,12 +22,14 @@ const DogBody = ({ breed }: { breed: Breed }) => {
         )}
       </h2>
       <p>{breed.temperament}</p>
-      <div className='card-actions justify-start'>
-        <div className='badge badge-outline'>{breed.life_span}</div>
-        <div className='badge badge-outline'>
+      <div className='card-actions justify-start font-medium'>
+        <div className='badge badge-secondary badge-outline'>
+          {breed.life_span}
+        </div>
+        <div className='badge badge-secondary badge-outline'>
           {breedNarrowed.height.imperial} ft
         </div>
-        <div className='badge badge-outline'>
+        <div className='badge badge-secondary badge-outline'>
           {breedNarrowed.weight.imperial} lbs
         </div>
       </div>

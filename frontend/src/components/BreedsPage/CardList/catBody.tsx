@@ -14,15 +14,19 @@ const CatBody = ({ breed }: { breed: Breed }) => {
       <h2 className='card-title'>
         {breed.name}
         {breedNarrowed.origin ? (
-          <div className='badge badge-secondary'>{breedNarrowed.origin}</div>
+          <div className='badge badge-lg badge-primary'>
+            {breedNarrowed.origin}
+          </div>
         ) : (
           <></>
         )}
       </h2>
       <p>{breed.temperament}</p>
-      <div className='card-actions justify-start'>
-        <div className='badge badge-outline'>{breed.life_span} years</div>
-        <div className='badge badge-outline'>
+      <div className='card-actions justify-start font-semibold'>
+        <div className='badge badge-primary badge-outline'>
+          {breed.life_span} years
+        </div>
+        <div className='badge badge-primary badge-outline'>
           {breedNarrowed.weight.imperial} lbs
         </div>
       </div>
