@@ -36,7 +36,7 @@ const BaseBreedSchema = z.object({
   reference_image_id: z.string().optional(),
   origin: z.string(),
   temperament: z.string().optional(),
-  image: ImageSchema,
+  image: ImageSchema.optional(),
 })
 
 const DogBreedSchema = BaseBreedSchema.extend({
@@ -144,6 +144,12 @@ export const isImage = (obj: unknown) => {
     return false
   }
   return true
+}
+
+export interface ImageResponse {
+  imageInfo: Image[]
+  isLoading: boolean
+  error?: string
 }
 
 //types for users

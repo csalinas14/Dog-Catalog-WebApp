@@ -17,16 +17,17 @@ const CatsPage = () => {
     animal: 'cat',
     page: pageRequest,
   })
-  console.log(breedInfo)
-  console.log(totalBreeds)
-  console.log(isLoading)
-  console.log(error)
+  //console.log(breedInfo)
+  //console.log(totalBreeds)
+  //console.log(isLoading)
+  //console.log(error)
+
   //loading skeletons for our cards
   if (isLoading) {
     return <BreedSkeleton />
   }
   return (
-    <div className='w-full'>
+    <div className='w-full mt-3 lg:mt-7'>
       <CardList breeds={breedInfo} />
       <Pagination
         page={page}

@@ -147,6 +147,13 @@ export const isImage = (obj: unknown) => {
   return true;
 };
 
+//type for frontend image response, loading, and error
+export interface ImageResponse {
+  imageInfo: Image[];
+  isLoading: boolean;
+  error?: string;
+}
+
 //types for users
 export interface UserEntry {
   id: number;
