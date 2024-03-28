@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div className='navbar flex-row fixed top-0 z-50 w-full border-b-0 shadow-md bg-base-200'>
+    <div className='navbar p-0 py-2 flex-row fixed top-0 z-50 w-full border-b-0 shadow-md bg-base-300'>
       <div className='navbar-start'>
         <div className='dropdown'>
           <button className='btn btn-square btn-ghost lg:hidden'>
@@ -39,7 +39,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link
-          className='btn btn-ghost hover:bg-inherit text-xl hidden lg:flex lg:text-2xl xl:text-5xl '
+          className='btn btn-ghost hover:bg-inherit text-xl hidden sm:pl-20 lg:pl-28 lg:flex lg:text-2xl xl:text-5xl'
           to='/'
         >
           Dogs & Cats

@@ -1,14 +1,18 @@
 import { Image, ImageResponse } from '../../../../types'
+import GalleryImageSkeleton from '../ImageSkeleton/skeleton'
 
 //const GalleryImage = () => {}
 
 const GallaryImages = ({ imageResponse }: { imageResponse: ImageResponse }) => {
   const images: Image[] = imageResponse.imageInfo
   console.log(images)
+  if (imageResponse.isLoading || imageResponse.isLoading) {
+    return <GalleryImageSkeleton />
+  }
   return (
     <div
       role='tabpanel'
-      className='tab-content columns-1 p-4 gap-4 h-full sm:columns-2 md:columns-3 md:gap-8'
+      className='tab-content columns-1 p-4 gap-4 border-base-300 rounded-box sm:columns-2 md:columns-3 md:gap-8'
     >
       {images.map((img, i) => (
         <img

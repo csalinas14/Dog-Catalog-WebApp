@@ -31,10 +31,10 @@ const LandingPage = () => {
   console.log(imageArray)
 
   return (
-    <>
+    <div className='bg-base-200'>
       <Hero />
       <CarouselImages images={imageArray} responses={responses} />
-    </>
+    </div>
   )
 }
 

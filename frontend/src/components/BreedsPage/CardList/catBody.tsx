@@ -14,7 +14,7 @@ const CatBody = ({ breed }: { breed: Breed }) => {
       <h2 className='card-title'>
         {breed.name}
         {breedNarrowed.origin ? (
-          <div className='badge badge-lg badge-primary'>
+          <div className='badge badge-md badge-primary text-center h-full lg:badge-lg'>
             {breedNarrowed.origin}
           </div>
         ) : (
