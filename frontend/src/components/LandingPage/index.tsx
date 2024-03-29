@@ -1,6 +1,7 @@
 import { Image } from '../../../types'
 import CarouselImages from './Images/image'
 import Hero from './Hero/index'
+import LandingPageBody from './Body'
 import { useImages } from '../../hooks/useImages'
 import {
   apiHeroCatImagesRequestLimit,
@@ -33,6 +34,7 @@ const LandingPage = () => {
   return (
     <div className='bg-base-200'>
       <Hero />
+      <LandingPageBody />
       <CarouselImages images={imageArray} responses={responses} />
     </div>
   )
