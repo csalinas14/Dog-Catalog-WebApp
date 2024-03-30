@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "dev": "ts-node-dev app.ts",
     "lint": "eslint --ext .ts .",
-    "start": "NODE_ENV=production node build/app.js",
+    "start": "node build/app.js",
     "migration:down": "node utils/migrate.js down",
     "migration:up": "node utils/migrate.js up",
     "migration-test:up": "NODE_ENV=test node utils/migrate.js up"
