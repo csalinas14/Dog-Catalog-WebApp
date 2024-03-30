@@ -1,4 +1,12 @@
+import { useNavigate } from 'react-router-dom'
+
 const LandingPageEnding = () => {
+  const navigate = useNavigate()
+  const handleRoute = (event: React.SyntheticEvent, path: string) => {
+    event.preventDefault()
+    navigate(path)
+  }
+
   return (
     <div className='bg-base-200 py-20 px-8 sm:px-12 lg:px-28'>
       <hr className='block w-48 h-1 border-0 bg-accent rounded-md mb-8' />
@@ -6,6 +14,31 @@ const LandingPageEnding = () => {
         Getting
         <span className='text-accent'> &nbsp;started</span>
       </h2>
+      <div className='bg-base-100 rounded-lg p-4'>
+        <p className='mb-8 lg:text-md xl:text-2xl'>
+          Loved what you saw so far? Check out even more below!
+        </p>
+        <div className='flex flex-wrap gap-2 justify-center lg:justify-start'>
+          <button
+            className='btn btn-primary lg:text-lg'
+            onClick={(event) => handleRoute(event, '/gallery')}
+          >
+            Check Gallery
+          </button>
+          <button
+            className='btn btn-secondary lg:text-lg'
+            onClick={(event) => handleRoute(event, '/dogs')}
+          >
+            Discover Dogs
+          </button>
+          <button
+            className='btn btn-accent lg:text-lg'
+            onClick={(event) => handleRoute(event, '/cats')}
+          >
+            Find Felines
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

@@ -71,7 +71,7 @@ const GalleryPage = () => {
   }
   //tab returns All photos or a filtered list of dogs or cats
   return (
-    <div id='cat-pattern' className='pt-20 h-full'>
+    <div id='cat-pattern' className='pt-20 h-full min-h-screen'>
       <div
         role='tablist'
         className='tabs tabs-lifted p-4 font-semibold lg:tabs-lg'
