@@ -8,10 +8,18 @@ import Navbar from './components/Navbar'
 import DogsPage from './components/BreedsPage/dogs'
 import CatsPage from './components/BreedsPage/cats'
 import GalleryPage from './components/GalleryPage'
+import Footer from './components/Footer/footer'
+import { useEffect } from 'react'
+import ScrollToTop from './utils/scrollToTop'
 
 function App() {
+  //on page refresh window will start at top
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual'
+  }, [])
   return (
     <div className='flex flex-col h-full'>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path='/' element={<LandingPage />} />
@@ -19,6 +27,7 @@ function App() {
         <Route path='/cats' element={<CatsPage />} />
         <Route path='/gallery' element={<GalleryPage />} />
       </Routes>
+      <Footer />
     </div>
   )
 }

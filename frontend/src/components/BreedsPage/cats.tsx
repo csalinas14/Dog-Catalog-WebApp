@@ -9,6 +9,7 @@ const CatsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   let page = searchParams.get('page')
   let pageRequest
+
   if (!page || !isNumeric(page)) {
     pageRequest = '0'
     page = '1'
