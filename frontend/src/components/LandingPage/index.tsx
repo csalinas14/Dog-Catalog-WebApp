@@ -1,5 +1,5 @@
 import { Image } from '../../../types'
-import CarouselImages from './Images/image'
+import CarouselImages from './Carousel/image'
 import Hero from './Hero/index'
 import LandingPageBody from './Body'
 import { useImages } from '../../hooks/useImages'
@@ -7,6 +7,8 @@ import {
   apiHeroCatImagesRequestLimit,
   apiHeroDogImagesRequestLimit,
 } from '../../constants'
+import CarouselBody from './Carousel/body'
+import LandingPageEnding from './Ending'
 
 const LandingPage = () => {
   const catsResponse = useImages({
@@ -29,13 +31,14 @@ const LandingPage = () => {
     imageArray.push(catsResponse.imageInfo[i])
   }
   imageArray.push(dogsResponse.imageInfo[dogsResponse.imageInfo.length - 1])
-  console.log(imageArray)
 
   return (
     <div className='bg-base-200'>
       <Hero />
       <LandingPageBody />
+      <CarouselBody />
       <CarouselImages images={imageArray} responses={responses} />
+      <LandingPageEnding />
     </div>
   )
 }
