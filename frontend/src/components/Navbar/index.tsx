@@ -33,7 +33,7 @@ const Navbar = () => {
             <li>
               <Link to='/gallery'>Gallery</Link>
             </li>
-            <li>
+            <li className='btn-disabled'>
               <a>Sign In</a>
             </li>
           </ul>
@@ -63,7 +63,7 @@ const Navbar = () => {
           <li>
             <Link to='/gallery'>Gallery</Link>
           </li>
-          <li>
+          <li className='btn-disabled'>
             <a>Sign In</a>
           </li>
         </ul>

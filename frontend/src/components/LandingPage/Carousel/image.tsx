@@ -23,16 +23,44 @@ const CarouselImages = ({
   })
 
   useEffect(() => {
-    const observer = new ResizeObserver((entries) => {
-      console.log(entries[0].target)
+    let localRef: HTMLDivElement | null = null
+    const observer = new ResizeObserver(() => {
+      //console.log(entries[0].target)
       setCarouselRef(target)
     })
     if (carouselRef.current) observer.observe(carouselRef.current)
-    return () => carouselRef.current && observer.unobserve(carouselRef.current)
+    localRef = carouselRef.current
+    return () => {
+      if (localRef) observer.unobserve(localRef)
+    }
   }, [carouselRef])
 
   if (responses && (responses[0].isLoading || responses[1].isLoading)) {
-    return <CarouselSkeleton />
+    return (
+      <div>
+        <div className='px-8 sm:px-12 lg:px-28'>
+          <div role='alert' className='alert bg-primary'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              className='stroke-info shrink-0 w-6 h-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+              ></path>
+            </svg>
+            <span>
+              First load may take awhile. We apologize for any inconvenience.
+            </span>
+          </div>
+        </div>
+        <CarouselSkeleton />
+      </div>
+    )
   }
 
   return (
