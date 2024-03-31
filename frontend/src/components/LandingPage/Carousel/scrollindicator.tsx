@@ -136,7 +136,7 @@ const ScrollIndicator = ({
   }
   console.log(target.current?.scrollLeft)
   return (
-    <div className='flex flex-row justify-center gap-1 py-4 lg:py-8'>
+    <div className='flex flex-row justify-center gap-1 pt-4 lg:pt-8'>
       {renderDots()}
     </div>
   )
