@@ -9,8 +9,7 @@ import {
   NewFavorite,
   AnimalType,
   CreateFavorite,
-  isCreateFavorite,
-  BreedResponse
+  isCreateFavorite
 } from '../types';
 import axios from 'axios';
 import { Favorite } from '../models';
@@ -21,7 +20,7 @@ const API_URL_FIRST = 'https://api.the';
 const API_URL_SECOND = 'api.com/v1/';
 
 //third party api call to get breed info on cats or dogs
-const getBreeds = async (query: BaseQuery): Promise<BreedResponse> => {
+const getBreeds = async (query: BaseQuery) => {
   let API_KEY;
   if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
   else if (query.animal === 'cat') API_KEY = process.env.CAT_API_KEY;
@@ -29,6 +28,7 @@ const getBreeds = async (query: BaseQuery): Promise<BreedResponse> => {
     throw new Error('incorrect animal');
   }
   const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}breeds?limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
+
   console.log(url_call);
   const config = {
     method: 'get',
@@ -36,6 +36,7 @@ const getBreeds = async (query: BaseQuery): Promise<BreedResponse> => {
   };
 
   const { data, headers } = await axios.request<Breed[]>(config);
+  console.log(data);
   //console.log(headers['pagination-count']);
 
   data.forEach((obj) => {
@@ -43,6 +44,38 @@ const getBreeds = async (query: BaseQuery): Promise<BreedResponse> => {
     console.log(obj);
     if (!isBreed(obj)) throw new Error('Incompatiable third party breed data');
   });
+  //console.log(data);
+  //const animal_data = data.map((d) => ({ ...d, type: animal } as Breed));
+  //console.log(animal_data);
+  return { breeds: data, totalCount: headers['pagination-count'] as number };
+};
+
+const getOneBreed = async (query: BaseQuery) => {
+  let API_KEY;
+  if (query.animal === 'dog') API_KEY = process.env.DOG_API_KEY;
+  else if (query.animal === 'cat') API_KEY = process.env.CAT_API_KEY;
+  else {
+    throw new Error('incorrect animal');
+  }
+
+  const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}breeds/${query.breed_id}`;
+
+  console.log(url_call);
+  const config = {
+    method: 'get',
+    url: url_call,
+    headers: {
+      'x-api-key': API_KEY
+    }
+  };
+
+  const { data, headers } = await axios.request<Breed>(config);
+  console.log(data);
+  //console.log(headers['pagination-count']);
+  data.type = query.animal;
+
+  if (!isBreed(data)) throw new Error('Incompatiable third party breed data');
+
   //console.log(data);
   //const animal_data = data.map((d) => ({ ...d, type: animal } as Breed));
   //console.log(animal_data);
@@ -206,5 +239,6 @@ export default {
   getImages,
   addFavorite,
   getFavorites,
-  delFavorite
+  delFavorite,
+  getOneBreed
 };
