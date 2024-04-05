@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import heroDog from '../../../assets/hero-dog-removebg-resize.png'
 
 const Hero = () => {
@@ -19,9 +20,14 @@ const Hero = () => {
             catalog with all kinds of different dog and cat breeds. Find your
             favorite among all these adorable animals!
           </p>
-          <button className='btn btn-accent rounded-2xl lg:text-lg xl:text-3xl xl:items-center xl:h-16'>
-            Get Started
-          </button>
+          <div className='flex flex-row gap-2'>
+            <button className='btn btn-accent rounded-2xl lg:text-lg xl:text-3xl xl:items-center xl:h-16'>
+              <Link to='/cats'>See Cats</Link>
+            </button>
+            <button className='btn btn-secondary rounded-2xl lg:text-lg xl:text-3xl xl:items-center xl:h-16'>
+              <Link to='/dogs'>See Dogs</Link>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -17,7 +17,6 @@ const CarouselImages = ({
   const [carouselRef, setCarouselRef] = useState(target)
 
   useEffect(() => {
-    console.log(carouselRef.current)
     if (carouselRef.current)
       pictureRef.current = carouselRef.current.children[0] as HTMLDivElement
   })
@@ -25,7 +24,6 @@ const CarouselImages = ({
   useEffect(() => {
     let localRef: HTMLDivElement | null = null
     const observer = new ResizeObserver(() => {
-      //console.log(entries[0].target)
       setCarouselRef(target)
     })
     if (carouselRef.current) observer.observe(carouselRef.current)
@@ -69,10 +67,10 @@ const CarouselImages = ({
         ref={target}
         className='carousel carousel-center space-x-4 p-4 bg-accent snap'
       >
-        {images.map((img) => (
+        {images.map((img, i) => (
           <div
             className='carousel-item w-4/5 md:w-3/5 lg:w-2/5'
-            key={img ? img.id : undefined}
+            key={img ? img.id : i}
           >
             <img
               className='aspect-[3/2] object-fit border-1 border-gray-500 rounded-2xl'

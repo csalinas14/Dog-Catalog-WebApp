@@ -1,11 +1,9 @@
 import { Image, ImageResponse } from '../../../../types'
 import GalleryImageSkeleton from '../ImageSkeleton/skeleton'
 
-//const GalleryImage = () => {}
-
 const GallaryImages = ({ imageResponse }: { imageResponse: ImageResponse }) => {
   const images: Image[] = imageResponse.imageInfo
-  console.log(images)
+
   if (imageResponse.isLoading || imageResponse.isLoading) {
     return <GalleryImageSkeleton />
   }

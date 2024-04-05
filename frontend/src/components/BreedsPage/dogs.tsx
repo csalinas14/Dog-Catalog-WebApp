@@ -18,10 +18,6 @@ const DogsPage = () => {
     animal: 'dog',
     page: pageRequest,
   })
-  //console.log(breedInfo)
-  //console.log(totalBreeds)
-  //console.log(isLoading)
-  //console.log(error)
 
   //loading skeletons for our cards
   if (isLoading) {
