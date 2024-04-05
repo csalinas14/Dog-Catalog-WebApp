@@ -1,20 +1,6 @@
 //import { Model, Optional } from 'sequelize';
 import z from 'zod'
 
-//a base type for breed data shared between cats and dogs
-/*
-interface BaseBreed {
-  weight: {
-    imperial: string;
-    metric: string;
-  };
-  name: string;
-  life_span: string;
-  reference_image_id: string;
-  origin: string;
-  temperament: string;
-  needed: number;
-}*/
 //types built with zod when using third-party api
 const weightSchema = z.object({
   imperial: z.string(),
@@ -103,27 +89,6 @@ export const isBreed = (obj: unknown) => {
   }
   return true
 }
-
-//our dog breed type from API call
-/*
-interface DogBreed extends BaseBreed {
-  type: 'dog';
-  id: number;
-  bred_for: string;
-  breed_group: string;
-  height: {
-    imperial: string;
-    metric: string;
-  };
-}
-
-interface CatBreed extends BaseBreed {
-  type: 'cat';
-  child_friendly: number;
-}
-*/
-//shared cat and dog type are described as breeds for API calls
-//export type Breed = DogBreed | CatBreed;
 
 export interface BaseQuery {
   limit: string

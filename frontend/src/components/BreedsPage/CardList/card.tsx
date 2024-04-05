@@ -12,7 +12,6 @@ const Card = ({ breed }: { breed: Breed }) => {
   const BodyType: React.FC<{ breed: Breed }> = ({ breed }) => {
     switch (breed.type) {
       case 'dog':
-        console.log(breed.breed_group)
         return <DogBody breed={breed} />
       case 'cat':
         return <CatBody breed={breed} />

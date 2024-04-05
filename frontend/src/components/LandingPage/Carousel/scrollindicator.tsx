@@ -56,8 +56,7 @@ const ScrollIndicator = ({
   const element = target.current
   const photoElement = photoRef.current
   const count = apiHeroCatImagesRequestLimit + apiHeroDogImagesRequestLimit
-  //console.log(photoElement?.offsetWidth)
-  //console.log(offsets)
+
   const offsets: number[] = []
 
   if (element?.children.length) {
@@ -65,7 +64,6 @@ const ScrollIndicator = ({
       const temp = element.children[i] as HTMLDivElement
       offsets.push(temp.offsetLeft)
     }
-    console.log(offsets)
   }
 
   //event listener for mousewheel or touchpad
@@ -134,7 +132,7 @@ const ScrollIndicator = ({
 
     setScrollProgress((windowScroll / totalWidth) * 100)
   }
-  console.log(target.current?.scrollLeft)
+
   return (
     <div className='flex flex-row justify-center gap-1 pt-4 lg:pt-8'>
       {renderDots()}

@@ -11,7 +11,7 @@ const GalleryPage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const page = searchParams.get('page')
-  //const searchType = searchParams.get('type')
+
   let pageRequest
   let pageString: string
   if (!page || !isNumeric(page)) {
