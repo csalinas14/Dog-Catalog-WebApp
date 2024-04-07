@@ -69,7 +69,7 @@ const getOneBreed = async (query: BaseQuery) => {
     }
   };
 
-  const { data, headers } = await axios.request<Breed>(config);
+  const { data } = await axios.request<Breed>(config);
   console.log(data);
   //console.log(headers['pagination-count']);
   data.type = query.animal;
@@ -79,7 +79,7 @@ const getOneBreed = async (query: BaseQuery) => {
   //console.log(data);
   //const animal_data = data.map((d) => ({ ...d, type: animal } as Breed));
   //console.log(animal_data);
-  return { breeds: data, totalCount: headers['pagination-count'] as number };
+  return data;
 };
 
 //third party api call to get images of a particular breed
@@ -105,6 +105,35 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
     return;
   });
 
+  return data;
+};
+
+const getImageById = async (animal: string, image_id: string) => {
+  let API_KEY;
+  if (animal === 'dog') API_KEY = process.env.DOG_API_KEY;
+  else if (animal === 'cat') API_KEY = process.env.CAT_API_KEY;
+  else {
+    throw new Error('incorrect animal');
+  }
+
+  const url_call = `${API_URL_FIRST}${animal}${API_URL_SECOND}images/${image_id}`;
+  const config = {
+    method: 'get',
+    url: url_call,
+    headers: {
+      'x-api-key': API_KEY
+    }
+  };
+
+  const { data } = await axios.request<Image>(config);
+  console.log(data);
+  //console.log(headers['pagination-count']);
+
+  if (!isImage(data)) throw new Error('Incompatiable third party breed data');
+
+  //console.log(data);
+  //const animal_data = data.map((d) => ({ ...d, type: animal } as Breed));
+  //console.log(animal_data);
   return data;
 };
 
@@ -240,5 +269,6 @@ export default {
   addFavorite,
   getFavorites,
   delFavorite,
-  getOneBreed
+  getOneBreed,
+  getImageById
 };

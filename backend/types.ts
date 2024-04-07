@@ -133,7 +133,7 @@ export interface BaseQuery {
   breed_id?: string;
 }
 
-export interface BreedParam {
+export interface Param {
   id: string;
 }
 

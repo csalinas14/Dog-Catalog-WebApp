@@ -1,6 +1,6 @@
 import express from 'express';
 import apiService from '../services/apiService';
-import { BaseQuery, BreedParam, ImagesQuery } from '../types';
+import { BaseQuery, Param, ImagesQuery } from '../types';
 import { Request } from 'express';
 import { toNewFavorite } from '../utils';
 import middleware from '../utils/middleware';
@@ -37,20 +37,20 @@ router.get(
 
 router.get(
   '/breeds/:id',
-  (req: Request<BreedParam, unknown, unknown, BaseQuery>, res) => {
+  (req: Request<Param, unknown, unknown, BaseQuery>, res) => {
     //IIFE required to pass our async function
 
     // prettier-ignore-start
     void (async () => {
       try {
-        const { breeds, totalCount } = await apiService.getOneBreed({
+        const data = await apiService.getOneBreed({
           animal: req.query.animal,
           limit: req.query.limit,
           page: req.query.page,
           breed_id: req.params.id
         });
 
-        res.send({ breeds, totalCount });
+        res.send(data);
       } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';
         if (error instanceof Error) {
@@ -75,6 +75,32 @@ router.get(
           page: req.query.page,
           id: req.query.id
         });
+        res.send(data);
+      } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+          errorMessage += ' Error: ' + error.message;
+        }
+        res.status(400).send(errorMessage);
+      }
+    })();
+    // prettier-ignore-end
+  }
+);
+
+router.get(
+  '/images/:id',
+  (req: Request<Param, unknown, unknown, BaseQuery>, res) => {
+    //IIFE required to pass our async function
+
+    // prettier-ignore-start
+    void (async () => {
+      try {
+        const data = await apiService.getImageById(
+          req.query.animal,
+          req.params.id
+        );
+
         res.send(data);
       } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';

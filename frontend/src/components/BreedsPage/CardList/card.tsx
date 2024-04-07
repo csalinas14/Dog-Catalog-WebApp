@@ -24,7 +24,7 @@ const Card = ({ breed }: { breed: Breed }) => {
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    navigate(`/breeds/:${breed.id}`)
+    navigate(`/breeds/${breed.id}`)
     console.log(breed.id)
   }
   const imageUrl = breed.image ? breed.image.url : undefined

@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/dogapi/images/hMyT4CDXR?animal=dog
