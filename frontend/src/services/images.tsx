@@ -9,6 +9,13 @@ const getImages = async (object: BaseQuery) => {
   return data
 }
 
+const getImagesByBreed = async (object: BaseQuery) => {
+  const { data } = await axios.get<Image[]>(
+    `${apiBaseUrl}/dogapi/images?animal=${object.animal}&limit=${object.limit}&breed_id=${object.breed_id}`
+  )
+  return data
+}
+
 const getImageById = async (animal: string, id: string) => {
   const { data } = await axios.get<Image>(
     `${apiBaseUrl}/dogapi/images/${id}?animal=${animal}`
@@ -19,4 +26,5 @@ const getImageById = async (animal: string, id: string) => {
 export default {
   getImages,
   getImageById,
+  getImagesByBreed,
 }

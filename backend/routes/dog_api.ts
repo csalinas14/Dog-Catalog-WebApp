@@ -73,7 +73,8 @@ router.get(
           animal: req.query.animal,
           limit: req.query.limit,
           page: req.query.page,
-          id: req.query.id
+          id: req.query.id,
+          breed_id: req.query.breed_id
         });
         res.send(data);
       } catch (error: unknown) {

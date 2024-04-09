@@ -17,16 +17,19 @@ const BreedPage = () => {
     animal = 'cat'
   }
 
-  const { breedInfo, breedImage, isLoading, error } = useBreedInfo({
-    breed_id: id,
-    animal: animal,
-  })
+  const { breedInfo, breedImage, breedGallery, isLoading, error } =
+    useBreedInfo({
+      breed_id: id,
+      animal: animal,
+    })
   console.log(breedInfo)
   console.log(breedImage)
+  console.log(breedGallery)
   if (error || !breedInfo) return <div>error</div>
 
   return (
-    <div className='w-full'>
+    <div className='w-full px-4 pt-20 md:px-8'>
+      <h1 className='text-center text-lg'>{breedInfo.name}</h1>
       <BreedInfoCard breed={breedInfo} image={breedImage} />
     </div>
   )

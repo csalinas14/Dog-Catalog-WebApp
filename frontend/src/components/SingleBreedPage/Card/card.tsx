@@ -27,13 +27,13 @@ const BreedInfoCard = ({
   }
 
   return (
-    <div className='card group cursor-pointer max-w-md w-full justify-self-center bg-base-100'>
+    <div className='card lg:card-side bg-base-100'>
       <div className='absolute inset-0 bg-center '></div>
       <figure className=''>
         <img
           src={image ? image.url : undefined}
           alt={breed.type}
-          className='h-full w-full '
+          className='aspect-square'
         />
       </figure>
       <BodyType breed={breed} />

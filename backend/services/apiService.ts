@@ -90,8 +90,13 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
   else {
     throw new Error('incorrect animal');
   }
+  let url_call;
+  if (query.breed_id) {
+    url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?limit=${query.limit}&breed_ids=${query.breed_id}&api_key=${API_KEY}`;
+  } else {
+    url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?has_breeds=true&limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
+  }
 
-  const url_call = `${API_URL_FIRST}${query.animal}${API_URL_SECOND}images/search?has_breeds=true&limit=${query.limit}&page=${query.page}&api_key=${API_KEY}`;
   const config = {
     method: 'get',
     url: url_call
