@@ -10,8 +10,11 @@ const CatBodyBreedInfo = ({ breed }: { breed: Breed }) => {
   }
   const breedNarrowed = test(breed)
   return (
-    <div className='card-body'>
-      <h2 className='card-title'>{breed.name}</h2>
+    <div className='card-body bg-base-300 p-4'>
+      <p className=''>{breedNarrowed.description}</p>
+      <p className='text-neutral-500'>
+        Weight: {breedNarrowed.weight.imperial} lbs
+      </p>
     </div>
   )
 }

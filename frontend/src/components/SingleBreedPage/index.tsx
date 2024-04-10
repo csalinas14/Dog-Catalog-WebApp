@@ -28,8 +28,13 @@ const BreedPage = () => {
   if (error || !breedInfo) return <div>error</div>
 
   return (
-    <div className='w-full px-4 pt-20 md:px-8'>
-      <h1 className='text-center text-lg'>{breedInfo.name}</h1>
+    <div className='w-full px-4 pt-20 sm:px-8 '>
+      <h1 className='text-center text-3xl font-bold leading-[40px] mt-2 sm:text-left sm:text-5xl sm:leading-[60px] sm:mt-8 sm:mb-4'>
+        {breedInfo.name}
+      </h1>
+      <h2 className='text-center text-xl font-semibold sm:text-left sm:text-3xl'>
+        {breedInfo.origin}
+      </h2>
       <BreedInfoCard breed={breedInfo} image={breedImage} />
     </div>
   )
