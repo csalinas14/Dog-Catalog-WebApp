@@ -1,4 +1,4 @@
-import { BaseQuery, BreedResponse } from '../../types'
+import { BaseQuery, Breed, BreedResponse } from '../../types'
 import { apiBaseUrl } from '../constants'
 import axios from 'axios'
 
@@ -9,6 +9,15 @@ const getBreeds = async (object: BaseQuery) => {
   return data
 }
 
+const getBreedInfo = async (object: BaseQuery) => {
+  const { data } = await axios.get<Breed>(
+    `${apiBaseUrl}/dogapi/breeds/${object.breed_id}?animal=${object.animal}`
+  )
+
+  return data
+}
+
 export default {
   getBreeds,
+  getBreedInfo,
 }

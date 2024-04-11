@@ -10,7 +10,7 @@ const DogBody = ({ breed }: { breed: Breed }) => {
   }
   const breedNarrowed = test(breed)
   return (
-    <div className='card-body '>
+    <div className='card-body transition duration-300 ease-in-out group-hover:translate-y-5 group-hover:translate-x-2 group-hover:scale-110'>
       <h2 className='card-title'>
         {breed.name}
         {breedNarrowed.breed_group ? (
@@ -21,7 +21,9 @@ const DogBody = ({ breed }: { breed: Breed }) => {
           <></>
         )}
       </h2>
-      <p>{breed.temperament}</p>
+      <p className='animate-fade-in transition:flex-grow duration-200 group-hover:flex-grow-[.001]'>
+        {breed.temperament}
+      </p>
       <div className='card-actions justify-start font-medium'>
         <div className='badge badge-secondary badge-outline'>
           {breed.life_span}

@@ -11,6 +11,7 @@ import GalleryPage from './components/GalleryPage'
 import Footer from './components/Footer/footer'
 import { useEffect } from 'react'
 import ScrollToTop from './utils/scrollToTop'
+import BreedPage from './components/SingleBreedPage'
 
 function App() {
   //on page refresh window will start at top
@@ -26,6 +27,7 @@ function App() {
         <Route path='/dogs' element={<DogsPage />} />
         <Route path='/cats' element={<CatsPage />} />
         <Route path='/gallery' element={<GalleryPage />} />
+        <Route path='/breeds/:id' element={<BreedPage />} />
       </Routes>
       <Footer />
     </div>

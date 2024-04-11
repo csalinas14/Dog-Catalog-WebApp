@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/dogapi/breeds/beng?animal=cat&api_key={{$processEnv process environment CAT_API_URL}}

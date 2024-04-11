@@ -130,6 +130,11 @@ export interface BaseQuery {
   limit: string;
   page: string;
   animal: 'dog' | 'cat';
+  breed_id?: string;
+}
+
+export interface Param {
+  id: string;
 }
 
 export type Image = z.infer<typeof ImageSchema>;

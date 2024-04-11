@@ -81,6 +81,11 @@ export interface BreedResponse {
   breeds: Breed[]
 }
 
+export interface BreedInfoResponse {
+  totalCount: number
+  breeds: Breed
+}
+
 export const isBreed = (obj: unknown) => {
   const parsedObj = BreedSchema.safeParse(obj)
   if (!parsedObj.success) {
@@ -94,6 +99,7 @@ export interface BaseQuery {
   limit: string
   page: string
   animal: 'dog' | 'cat'
+  breed_id?: string
 }
 
 export type Image = z.infer<typeof ImageSchema>
@@ -129,6 +135,24 @@ export interface UserEntry {
 export type NonSensitiveUser = Omit<UserEntry, 'passwordHash' | 'disabled'>
 
 export type UserToken = Omit<NonSensitiveUser, 'name'>
+
+export enum AnimalType {
+  DOG = 'dog',
+  CAT = 'cat',
+}
+
+export interface NewFavorite {
+  image_id: string
+  //sub_id: string;
+  animal: AnimalType
+}
+
+//wanted new users to have password property over passwordHash for clarity
+interface NewUserPartial extends UserEntry {
+  password: string
+}
+//used for taking unknown new user requests
+export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>
 
 /*
 

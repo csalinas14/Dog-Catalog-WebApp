@@ -1,6 +1,6 @@
 import express from 'express';
 import apiService from '../services/apiService';
-import { BaseQuery, ImagesQuery } from '../types';
+import { BaseQuery, Param, ImagesQuery } from '../types';
 import { Request } from 'express';
 import { toNewFavorite } from '../utils';
 import middleware from '../utils/middleware';
@@ -14,13 +14,50 @@ router.get(
 
     // prettier-ignore-start
     void (async () => {
-      const { breeds, totalCount } = await apiService.getBreeds({
-        animal: req.query.animal,
-        limit: req.query.limit,
-        page: req.query.page
-      });
-      //console.log(res.header);
-      res.send({ breeds, totalCount });
+      try {
+        const { breeds, totalCount } = await apiService.getBreeds({
+          animal: req.query.animal,
+          limit: req.query.limit,
+          page: req.query.page,
+          breed_id: req.query.breed_id
+        });
+        //console.log(res.header);
+        res.send({ breeds, totalCount });
+      } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+          errorMessage += ' Error: ' + error.message;
+        }
+        res.status(400).send(errorMessage);
+      }
+    })();
+    // prettier-ignore-end
+  }
+);
+
+router.get(
+  '/breeds/:id',
+  (req: Request<Param, unknown, unknown, BaseQuery>, res) => {
+    //IIFE required to pass our async function
+
+    // prettier-ignore-start
+    void (async () => {
+      try {
+        const data = await apiService.getOneBreed({
+          animal: req.query.animal,
+          limit: req.query.limit,
+          page: req.query.page,
+          breed_id: req.params.id
+        });
+
+        res.send(data);
+      } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+          errorMessage += ' Error: ' + error.message;
+        }
+        res.status(400).send(errorMessage);
+      }
     })();
     // prettier-ignore-end
   }
@@ -36,8 +73,35 @@ router.get(
           animal: req.query.animal,
           limit: req.query.limit,
           page: req.query.page,
-          id: req.query.id
+          id: req.query.id,
+          breed_id: req.query.breed_id
         });
+        res.send(data);
+      } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+          errorMessage += ' Error: ' + error.message;
+        }
+        res.status(400).send(errorMessage);
+      }
+    })();
+    // prettier-ignore-end
+  }
+);
+
+router.get(
+  '/images/:id',
+  (req: Request<Param, unknown, unknown, BaseQuery>, res) => {
+    //IIFE required to pass our async function
+
+    // prettier-ignore-start
+    void (async () => {
+      try {
+        const data = await apiService.getImageById(
+          req.query.animal,
+          req.params.id
+        );
+
         res.send(data);
       } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';
