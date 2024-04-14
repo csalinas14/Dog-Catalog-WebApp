@@ -12,6 +12,7 @@ import Footer from './components/Footer/footer'
 import { useEffect } from 'react'
 import ScrollToTop from './utils/scrollToTop'
 import BreedPage from './components/SingleBreedPage'
+import LoginPage from './components/Login/login'
 
 function App() {
   //on page refresh window will start at top
@@ -28,6 +29,7 @@ function App() {
         <Route path='/cats' element={<CatsPage />} />
         <Route path='/gallery' element={<GalleryPage />} />
         <Route path='/breeds/:id' element={<BreedPage />} />
+        <Route path='/login' element={<LoginPage />} />
       </Routes>
       <Footer />
     </div>

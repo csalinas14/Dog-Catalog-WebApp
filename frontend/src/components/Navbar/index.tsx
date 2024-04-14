@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 const Navbar = () => {
+  const loginMatch = useMatch('/login')
+
+  if (loginMatch) return
   return (
     <div className='navbar p-0 py-2 flex-row fixed top-0 z-50 w-full border-b-0 shadow-md bg-base-300'>
       <div className='navbar-start'>
