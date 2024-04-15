@@ -1,4 +1,17 @@
+import { useState } from 'react'
+
 const LoginPage = () => {
+  const [username, setUserName] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+  const handleLogin = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    setUserName('')
+    setPassword('')
+  }
+
+  console.log(username)
+
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
       <div className='relative flex flex-col m-6 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
@@ -7,8 +20,8 @@ const LoginPage = () => {
           <span className='font-light text-gray-400 mb-8'>
             Welcome back! Please enter your details
           </span>
-          <form className='py-4'>
-            <label className='input input-bordered flex items-center gap-2 bg-gray-100 mb-4'>
+          <form className='py-2 flex flex-col gap-4' onSubmit={handleLogin}>
+            <label className='input input-bordered flex items-center gap-2 bg-gray-100'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 16 16'
@@ -17,9 +30,15 @@ const LoginPage = () => {
               >
                 <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z' />
               </svg>
-              <input type='text' className='grow' placeholder='Username' />
+              <input
+                type='text'
+                className='grow'
+                placeholder='Username'
+                value={username}
+                onChange={({ target }) => setUserName(target.value)}
+              />
             </label>
-            <label className='input input-bordered flex items-center gap-2 bg-gray-100 mb-2'>
+            <label className='input input-bordered flex items-center gap-2 bg-gray-100'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 16 16'
@@ -32,8 +51,17 @@ const LoginPage = () => {
                   clipRule='evenodd'
                 />
               </svg>
-              <input type='password' className='grow' value='password' />
+              <input
+                type='password'
+                className='grow'
+                placeholder='Password'
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+              />
             </label>
+            <button className='btn btn-neutral w-full mt-4 text-white'>
+              Sign In
+            </button>
           </form>
         </div>
       </div>
