@@ -8,11 +8,10 @@ router.post('/', async (req, res) => {
     const loginUser = await loginService.login(req.body);
     res.json(loginUser);
   } catch (error: unknown) {
-    let errorMessage = 'Something went wrong.';
+    let errorMessage;
     if (error instanceof Error) {
-      errorMessage += ' Error: ' + error.message;
+      errorMessage = error.message;
     }
-    console.log(errorMessage);
     res.status(400).send(errorMessage);
   }
 });

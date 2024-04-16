@@ -1,19 +1,59 @@
 import { useState } from 'react'
+import loginService from '../../services/login'
+
+import { getErrorMessage } from '../../utils/functions'
 
 const LoginPage = () => {
   const [username, setUserName] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>()
 
-  const handleLogin = (event: React.SyntheticEvent) => {
+  const handleLogin = async (event: React.SyntheticEvent) => {
     event.preventDefault()
+    setIsLoading(true)
+    try {
+      const user = await loginService.login({ username, password })
+      console.log(user)
+      localStorage.setItem('user', JSON.stringify(user))
+    } catch (error) {
+      console.log(error)
+      setError(getErrorMessage(error))
+      setTimeout(() => {
+        setError('')
+      }, 3000)
+    } finally {
+      setIsLoading(false)
+    }
     setUserName('')
     setPassword('')
   }
 
-  console.log(username)
-
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
+      {error ? (
+        <div className='toast toast-top toast-center'>
+          <div className='alert alert-error'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='stroke-current shrink-0 h-6 w-6'
+              fill='none'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+              />
+            </svg>
+
+            <span className=''>{error}</span>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className='relative flex flex-col m-6 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
         <div className='flex flex-col justify-center p-8 md:p-14'>
           <h1 className='mb-3 text-4xl font-bold'>Welcome back</h1>
@@ -60,7 +100,11 @@ const LoginPage = () => {
               />
             </label>
             <button className='btn btn-neutral w-full mt-4 text-white'>
-              Sign In
+              {isLoading ? (
+                <span className='loading loading-spinner loading-md'></span>
+              ) : (
+                'Sign In'
+              )}
             </button>
           </form>
         </div>
