@@ -3,5 +3,6 @@ content-type: application/json
 
 {
   "username": "tester@gmail.com",
-  "password": "test"
+  "password": "test",
+  "rememberMe": false
 }

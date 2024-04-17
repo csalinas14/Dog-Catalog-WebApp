@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import loginService from '../services/login'
 import { getErrorMessage } from '../utils/functions'
 
-export const useLogin = (props: { username: string; password: string }) => {
+export const useLogin = (props: {
+  username: string
+  password: string
+  rememberMe: boolean
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
 

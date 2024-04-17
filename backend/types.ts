@@ -181,8 +181,12 @@ interface NewUserPartial extends UserEntry {
 //used for taking unknown new user requests
 export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>;
 
+interface LoginSession extends NewUserPartial {
+  rememberMe: boolean;
+}
+
 //type used for logining in. Requires only username and password.
-export type loginUser = Omit<NewUser, 'name'>;
+export type loginUser = Omit<LoginSession, 'name'>;
 
 //type for our User Model
 export interface UserInstance
@@ -197,6 +201,7 @@ interface SessionEntry {
   id: number;
   token: string;
   userId: number;
+  rememberMe: boolean;
 }
 
 export interface PreDatabaseSession extends Optional<SessionEntry, 'id'> {}

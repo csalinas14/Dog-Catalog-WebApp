@@ -19,6 +19,10 @@ const Session = sequelize.define<SessionInstance>(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'users', key: 'id' }
+    },
+    rememberMe: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   },
   {
