@@ -22,7 +22,8 @@ const LoginPage = () => {
         password,
         rememberMe,
       })
-      sessionStorage.setItem('user', JSON.stringify(user))
+      if (rememberMe) localStorage.setItem('user', JSON.stringify(user))
+      else sessionStorage.setItem('user', JSON.stringify(user))
       navigate('/')
     } catch (error) {
       console.log(error)

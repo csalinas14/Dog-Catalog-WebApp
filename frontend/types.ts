@@ -154,6 +154,15 @@ interface NewUserPartial extends UserEntry {
 //used for taking unknown new user requests
 export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>
 
+interface PreUserSession extends UserEntry {
+  token: string
+}
+
+export type UserSession = Omit<
+  PreUserSession,
+  'id' | 'passwordHash' | 'disabled'
+>
+
 /*
 
 export interface PreDatabaseUser extends Optional<UserEntry, 'id'> {}

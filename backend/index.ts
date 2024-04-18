@@ -3,6 +3,7 @@ import cors from 'cors';
 import dogApiRouter from './routes/dog_api';
 import userRouter from './routes/users';
 import loginRouter from './routes/login';
+import sessionRouter from './routes/sessions';
 import 'express-async-errors';
 import middleware from './utils/middleware';
 import dotenv from 'dotenv';
@@ -27,6 +28,7 @@ declare global {
 app.use('/api/dogapi', dogApiRouter);
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
+app.use('/api/sessions', sessionRouter);
 
 app.use(middleware.errorHandler);
 
