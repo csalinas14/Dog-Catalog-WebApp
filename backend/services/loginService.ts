@@ -44,7 +44,8 @@ const login = async (user: loginUser) => {
   const loginUser = {
     token,
     username: userFound.username,
-    name: userFound.name
+    name: userFound.name,
+    id: userFound.id
   };
   return loginUser;
 };

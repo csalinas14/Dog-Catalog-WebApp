@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import loginService from '../../services/login'
 import { useNavigate } from 'react-router-dom'
-
 import { getErrorMessage } from '../../utils/functions'
+import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
+import { resetIdle, selectUser, updateUser } from '../../reducers/usersReducer'
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -13,8 +14,36 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
+  const dispatch = useAppDispatch()
+  const userState = useAppSelector(selectUser)
+
   const handleLogin = async (event: React.SyntheticEvent) => {
     event.preventDefault()
+    const resultAction = await dispatch(
+      updateUser({
+        username: email,
+        password,
+        rememberMe,
+      })
+    )
+    if (updateUser.fulfilled.match(resultAction)) {
+      const user = resultAction.payload
+      //showToast('success', `Updated ${user.name}`)
+      console.log(user)
+      navigate('/?success=true')
+    } else {
+      if (resultAction.payload) {
+        // Since we passed in `MyKnownError` to `rejectValue` in `updateUser`, the type information will be available here.
+        // Note: this would also be a good place to do any handling that relies on the `rejectedWithValue` payload, such as setting field errors
+        //showToast('error', `Update failed: ${resultAction.payload.errorMessage}`)
+        setTimeout(() => {
+          dispatch(resetIdle())
+        }, 3000)
+      } else {
+        //showToast('error', `Update failed: ${resultAction.error.message}`)
+      }
+    }
+    /*
     setIsLoading(true)
     try {
       const user = await loginService.login({
@@ -34,14 +63,17 @@ const LoginPage = () => {
     } finally {
       setIsLoading(false)
     }
+    */
     setEmail('')
     setPassword('')
     setRememberMe(false)
   }
 
+  console.log(userState)
+
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
-      {error ? (
+      {userState.loading === 'failed' ? (
         <div className='toast toast-top toast-center'>
           <div className='alert alert-error'>
             <svg
@@ -58,7 +90,7 @@ const LoginPage = () => {
               />
             </svg>
 
-            <span className=''>{error}</span>
+            <span className=''>{userState.error}</span>
           </div>
         </div>
       ) : (
@@ -129,7 +161,7 @@ const LoginPage = () => {
               </label>
             </div>
             <button className='btn btn-neutral w-full mt-1 text-white'>
-              {isLoading ? (
+              {userState.loading === 'pending' ? (
                 <span className='loading loading-spinner loading-md'></span>
               ) : (
                 'Sign In'

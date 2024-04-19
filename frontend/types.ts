@@ -158,10 +158,7 @@ interface PreUserSession extends UserEntry {
   token: string
 }
 
-export type UserSession = Omit<
-  PreUserSession,
-  'id' | 'passwordHash' | 'disabled'
->
+export type UserSession = Omit<PreUserSession, 'passwordHash' | 'disabled'>
 
 /*
 

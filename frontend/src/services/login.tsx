@@ -7,6 +7,7 @@ const login = async (props: {
   rememberMe: boolean
 }) => {
   const response = await axios.post(apiBaseUrl + '/login', props)
+  //console.log(data)
   return response.data
 }
 
