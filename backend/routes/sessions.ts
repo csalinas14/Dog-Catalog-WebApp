@@ -6,13 +6,13 @@ const router = express.Router();
 router.get('/:token', async (req, res) => {
   try {
     const activeSession = await sessionService.checkSession(req.params.token);
-    res.send(activeSession);
+    res.send({ active: activeSession });
   } catch (error: unknown) {
     let errorMessage;
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-    res.status(400).send(errorMessage);
+    res.status(400).send({ message: errorMessage, status: 400 });
   }
 });
 

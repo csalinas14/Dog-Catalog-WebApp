@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../utils/functions'
 import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
 import { resetIdle, selectUser, updateUser } from '../../reducers/usersReducer'
+import Toast from '../Toast/toast'
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -31,6 +32,9 @@ const LoginPage = () => {
       //showToast('success', `Updated ${user.name}`)
       console.log(user)
       navigate('/?success=true')
+      setTimeout(() => {
+        dispatch(resetIdle())
+      }, 3000)
     } else {
       if (resultAction.payload) {
         // Since we passed in `MyKnownError` to `rejectValue` in `updateUser`, the type information will be available here.
@@ -74,25 +78,7 @@ const LoginPage = () => {
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
       {userState.loading === 'failed' ? (
-        <div className='toast toast-top toast-center'>
-          <div className='alert alert-error'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='stroke-current shrink-0 h-6 w-6'
-              fill='none'
-              viewBox='0 0 24 24'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
-              />
-            </svg>
-
-            <span className=''>{userState.error}</span>
-          </div>
-        </div>
+        <Toast message={userState.error} type={'error'} />
       ) : (
         <></>
       )}

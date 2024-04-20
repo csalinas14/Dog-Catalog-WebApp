@@ -1,7 +1,15 @@
+import { useEffect, useState } from 'react'
 import ErrorIcon from './errorIcon'
 import SuccessIcon from './successIcon'
+import { useAppSelector } from '../../utils/redux_hooks'
+import { selectUser } from '../../reducers/usersReducer'
 
 const Toast = (props: { type: string; message: string | undefined | null }) => {
+  const [show, setShow] = useState<boolean>(true)
+  const userState = useAppSelector(selectUser)
+
+  console.log(props.type)
+
   let message = props.message
   if (!props.message) message = 'Unknown'
   const assertNever = (value: string): never => {
@@ -20,15 +28,19 @@ const Toast = (props: { type: string; message: string | undefined | null }) => {
         return assertNever(props.type)
     }
   }
+  setTimeout(() => {
+    setShow(false)
+  }, 3000)
 
-  return (
-    <div className='toast toast-top toast-center'>
-      <div className={`alert alert-${props.type}`}>
-        <Icon />
-        <span className=''>{message}</span>
+  if (show)
+    return (
+      <div className='toast toast-top toast-center top-8 z-50'>
+        <div className={`alert alert-${props.type}`}>
+          <Icon />
+          <span className=''>{message}</span>
+        </div>
       </div>
-    </div>
-  )
+    )
 }
 
 export default Toast

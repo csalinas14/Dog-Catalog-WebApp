@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-    res.status(400).json(errorMessage);
+    res.status(400).json({ message: errorMessage, status: 400 });
   }
 });
 
