@@ -1,14 +1,22 @@
 import { Link, useMatch, useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../utils/redux_hooks'
-import { selectUser } from '../../reducers/usersReducer'
+import { useAppSelector, useAppDispatch } from '../../utils/redux_hooks'
+import { logout, selectUser } from '../../reducers/usersReducer'
 
 const Navbar = () => {
   const loginMatch = useMatch('/login')
+  const signUpMatch = useMatch('/signup')
   const userState = useAppSelector(selectUser)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   //console.log(userState)
 
-  if (loginMatch) return
+  const handleLogout = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    dispatch(logout())
+    navigate('/')
+  }
+
+  if (loginMatch || signUpMatch) return
   return (
     <div
       tabIndex={0}
@@ -83,7 +91,7 @@ const Navbar = () => {
                 className='btn btn-ghost btn-circle avatar placeholder hover:opacity-80 focus:opacity-80'
               >
                 <div className='bg-neutral text-neutral-content w-10 rounded-full cursor-pointer'>
-                  <span>AI</span>
+                  <span>{userState.user.name.charAt(0)}</span>
                 </div>
               </div>
               <ul
@@ -101,7 +109,7 @@ const Navbar = () => {
                     <span className='badge'>New</span>
                   </a>
                 </li>
-                <li>
+                <li role='button' onClick={handleLogout}>
                   <a tabIndex={0}>Logout</a>
                 </li>
               </ul>

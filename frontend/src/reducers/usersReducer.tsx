@@ -99,13 +99,13 @@ export const checkSession = createAsyncThunk<
 )
 
 interface UserState {
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+  loading: 'idle' | 'pending' | 'succeeded' | 'failed' | 'start'
   user: UserSession | null
   error: string | undefined | null
 }
 
 const initialState: UserState = {
-  loading: 'idle',
+  loading: 'start',
   user: null,
   error: null,
 }
@@ -187,7 +187,7 @@ const userSlice = createSlice({
   },
 })
 
-export const { resetIdle } = userSlice.actions
+export const { resetIdle, logout } = userSlice.actions
 
 export const selectUser = (state: RootState) => state.user
 

@@ -14,6 +14,7 @@ import ScrollToTop from './utils/scrollToTop'
 import BreedPage from './components/SingleBreedPage'
 import LoginPage from './components/Login/login'
 import UserPage from './components/UserPage/userPage'
+import SignUpPage from './components/SignUp/signup'
 import sessionService from './services/sessions'
 import { UserSession } from '../types'
 import Toast from './components/Toast/toast'
@@ -34,6 +35,7 @@ function App() {
     const localS = localStorage.getItem('user')
     console.log(sessionS)
     console.log(localS)
+    console.log('DISPATCHING CHECKSESSION')
     if (localS !== null) {
       //const storage = localS ? localS : sessionS
       const longerSession = JSON.parse(localS)
@@ -79,6 +81,7 @@ function App() {
         <Route path='/breeds/:id' element={<BreedPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/user/:id' element={<UserPage />} />
+        <Route path='/signup' element={<SignUpPage />} />
       </Routes>
       <Footer />
     </div>
