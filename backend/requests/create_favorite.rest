@@ -1,6 +1,6 @@
 POST https://api.thecatapi.com/v1/favourites HTTP/1.1
 content-type: application/json
-x-api-key: #add key
+x-api-key: #add api key
 Content-Length: 49
 
 {

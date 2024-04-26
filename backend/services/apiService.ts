@@ -9,7 +9,10 @@ import {
   NewFavorite,
   AnimalType,
   CreateFavorite,
-  isCreateFavorite
+  isCreateFavorite,
+  FavoriteType,
+  isFavorite,
+  UserToken
 } from '../types';
 import axios from 'axios';
 import { Favorite } from '../models';
@@ -186,10 +189,14 @@ const addFavorite = async (favorite: NewFavorite, user_id: number) => {
   return data;
 };
 
-const getFavorites = async (request: Request) => {
+const getFavorites = async (
+  animalQuery: AnimalType,
+  user: UserToken | undefined
+) => {
   let API_KEY;
   let animal;
-  switch (request.body.animal) {
+
+  switch (animalQuery) {
     case AnimalType.DOG:
       API_KEY = process.env.DOG_API_KEY;
       animal = 'dog';
@@ -202,7 +209,8 @@ const getFavorites = async (request: Request) => {
       throw new Error('incorrect animal');
   }
 
-  const url_call = `${API_URL_FIRST}${animal}${API_URL_SECOND}favourites?sub_id=${request.user?.id}`;
+  const url_call = `${API_URL_FIRST}${animal}${API_URL_SECOND}favourites?sub_id=${user?.id}`;
+  console.log(url_call);
   const config = {
     method: 'get',
     url: url_call,
@@ -212,9 +220,15 @@ const getFavorites = async (request: Request) => {
     }
   };
 
-  const response = await axios.request(config);
+  const { data } = await axios.request<FavoriteType[]>(config);
 
-  return response;
+  data.forEach((obj) => {
+    console.log(obj);
+    if (!isFavorite(obj)) throw new Error('Invalid favorite type');
+    return;
+  });
+
+  return data;
 };
 
 const delFavorite = async (request: Request) => {

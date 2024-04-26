@@ -5,12 +5,16 @@ import GalleryPagination from './Pagination/pagination'
 import { Image, ImageResponse } from '../../../types'
 import { useSearchParams } from 'react-router-dom'
 import { isNumeric } from '../../utils/functions'
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
 
 const GalleryPage = () => {
   //setting up our page variables
 
   const [searchParams, setSearchParams] = useSearchParams()
   const page = searchParams.get('page')
+
+  const dispatch = useAppDispatch()
 
   let pageRequest
   let pageString: string

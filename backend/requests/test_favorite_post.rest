@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/dogapi/favorites HTTP/1.1
-Authorization: #add token
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlckBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzEzMzE0MTk2fQ.jibA07xG8LsEU5E4kSlMQRy_c4Ir8oorBup-3lHXluQ
 content-type: application/json
 
 {
-  "image_id": "GQ61BDToD",
+  "image_id": "pBRl_KzA5",
   "animal": "cat"
 }

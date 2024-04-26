@@ -256,3 +256,28 @@ export const isCreateFavorite = (obj: unknown) => {
   }
   return true;
 };
+
+const ImageFavoriteSchema = z.object({
+  id: z.string(),
+  url: z.string().url()
+});
+
+const FavoriteSchema = z.object({
+  id: z.number(),
+  user_id: z.string(),
+  image_id: z.string(),
+  sub_id: z.string(),
+  created_at: z.string(),
+  image: ImageFavoriteSchema
+});
+
+export type FavoriteType = z.infer<typeof FavoriteSchema>;
+
+export const isFavorite = (obj: unknown) => {
+  const parsedObj = FavoriteSchema.safeParse(obj);
+  if (!parsedObj.success) {
+    console.error(parsedObj.error.message);
+    return false;
+  }
+  return true;
+};

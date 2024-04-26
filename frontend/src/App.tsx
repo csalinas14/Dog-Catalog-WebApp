@@ -20,6 +20,7 @@ import { UserSession } from '../types'
 import Toast from './components/Toast/toast'
 import { useAppSelector, useAppDispatch } from './utils/redux_hooks'
 import { checkSession, selectUser } from './reducers/usersReducer'
+import { getFavorites } from './reducers/favoritesReducer'
 
 function App() {
   const [searchParams] = useSearchParams()
@@ -47,6 +48,8 @@ function App() {
       console.log(shortSession)
       dispatch(checkSession({ token: shortSession.token }))
     }
+    if (userState.loading === 'succeeded' && userState.user)
+      dispatch(getFavorites({ animal: 'cat', token: userState.user.token }))
     /*
     const checkUserSession = async () => {
       const sessionS = sessionStorage.getItem('user')
