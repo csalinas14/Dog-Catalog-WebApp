@@ -1,8 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
 import { checkSession, selectUser } from '../../reducers/usersReducer'
+import { selectFavorites } from '../../reducers/favoritesReducer'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import img from '../../assets/hero-dog.jpg'
+import FavoritesList from './FavoritesList/favoriteslist'
 
 const UserPage = () => {
   const userMatch = useMatch('/user/:id')
@@ -13,6 +15,7 @@ const UserPage = () => {
   const dispatch = useAppDispatch()
 
   const userState = useAppSelector(selectUser)
+  const favoriteState = useAppSelector(selectFavorites)
   console.log(userId)
   console.log(userState)
 
@@ -50,11 +53,18 @@ const UserPage = () => {
   return (
     <div className='pt-20 min-h-screen w-full'>
       <div className='flex flex-col px-20'>
-        <div className='flex flex-row'>
-          <figure className='lg:w-2/5'>
+        <div className='flex flex-col md:flex-row'>
+          <figure className='md:w-2/5'>
             <img src={img} className='aspect-square rounded-full' />
           </figure>
-          <div></div>
+          <div>
+            <h1 className='font-semibold text-6xl'>
+              Hello {userState.user.name}!
+            </h1>
+          </div>
+        </div>
+        <div>
+          <FavoritesList favorites={favoriteState.favorites} />
         </div>
       </div>
     </div>

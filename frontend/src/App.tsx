@@ -48,8 +48,6 @@ function App() {
       console.log(shortSession)
       dispatch(checkSession({ token: shortSession.token }))
     }
-    if (userState.loading === 'succeeded' && userState.user)
-      dispatch(getFavorites({ animal: 'cat', token: userState.user.token }))
     /*
     const checkUserSession = async () => {
       const sessionS = sessionStorage.getItem('user')
@@ -67,6 +65,12 @@ function App() {
     checkUserSession()
     */
   }, [dispatch])
+
+  useEffect(() => {
+    if (userState.user)
+      dispatch(getFavorites({ animal: 'cat', token: userState.user.token }))
+  }, [dispatch, userState.user])
+
   return (
     <div className='flex flex-col h-full'>
       <ScrollToTop />
