@@ -264,10 +264,10 @@ const ImageFavoriteSchema = z.object({
 
 const FavoriteSchema = z.object({
   id: z.number(),
-  user_id: z.string(),
+  user_id: z.string().optional(),
   image_id: z.string(),
   sub_id: z.string(),
-  created_at: z.string(),
+  created_at: z.string().optional(),
   image: ImageFavoriteSchema
 });
 

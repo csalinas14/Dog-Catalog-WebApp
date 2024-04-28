@@ -20,6 +20,19 @@ interface FavoriteAttributes {
   animal: string
 }
 
+interface NewFavoriteAttributes {
+  animal: string
+  image_id: string
+  url: string
+  sub_id: string
+  token: string
+}
+
+export type NewFavoriteResponse = {
+  message: string
+  id: number
+}
+
 export const getFavorites = createAsyncThunk<
   // Return type of the payload creator
   FavoriteType[],
@@ -55,15 +68,51 @@ export const getFavorites = createAsyncThunk<
   //return (await response) as UserSession
 )
 
+export const addFavorite = createAsyncThunk<
+  // Return type of the payload creator
+  NewFavoriteResponse,
+  // First argument to the payload creator
+  NewFavoriteAttributes,
+  // Types for ThunkAPI
+  {
+    rejectValue: MyKnownError
+  }
+>(
+  'favorites/add',
+  async (favoriteAttr, thunkApi) => {
+    try {
+      const response = await favoriteService.addFavorite(
+        favoriteAttr.animal,
+        favoriteAttr.image_id,
+        favoriteAttr.token
+      )
+      //console.log(data)
+
+      return response as NewFavoriteResponse
+    } catch (err) {
+      const error = err as AxiosError<MyKnownError>
+      //console.log(response)
+      //if (response.status === 400) {
+      // Return the known error for future handling
+      //console.log(response)
+      if (!error.response) {
+        throw err
+      }
+      return thunkApi.rejectWithValue(error.response.data)
+    }
+  }
+  //return (await response) as UserSession
+)
+
 interface FavoriteState {
   loading: 'idle' | 'pending' | 'succeeded' | 'failed' | 'start'
-  favorites: FavoriteType[] | null
+  favorites: FavoriteType[] | []
   error: string | undefined | null
 }
 
 const initialState: FavoriteState = {
   loading: 'start',
-  favorites: null,
+  favorites: [],
   error: null,
 }
 
@@ -101,6 +150,23 @@ const favoriteSlice = createSlice({
       })
       .addCase(getFavorites.pending, (state) => {
         state.loading = 'pending'
+      })
+      .addCase(addFavorite.fulfilled, (state, action) => {
+        if (action.payload.message === 'SUCCESS') {
+          const newFav: FavoriteType = {
+            id: action.payload.id,
+            image_id: action.meta.arg.image_id,
+            sub_id: action.meta.arg.sub_id,
+            image: {
+              id: action.meta.arg.image_id,
+              url: action.meta.arg.url,
+            },
+          }
+
+          state.favorites = [...state.favorites, newFav]
+          state.loading = 'succeeded'
+          state.error = null
+        }
       })
   },
 })
