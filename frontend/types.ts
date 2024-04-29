@@ -102,7 +102,11 @@ export interface BaseQuery {
   breed_id?: string
 }
 
-export type Image = z.infer<typeof ImageSchema>
+const ImageAPISchema = ImageSchema.extend({
+  type: z.string(),
+})
+
+export type Image = z.infer<typeof ImageAPISchema>
 
 export interface ImagesQuery extends BaseQuery {
   id: string

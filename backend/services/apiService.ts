@@ -108,6 +108,7 @@ const getImages = async (query: ImagesQuery): Promise<Image[]> => {
   const { data } = await axios.request<Image[]>(config);
   console.log(data);
   data.forEach((obj) => {
+    obj.type = query.animal;
     console.log(obj);
     if (!isImage(obj)) throw new Error('Invalid image type');
     return;
