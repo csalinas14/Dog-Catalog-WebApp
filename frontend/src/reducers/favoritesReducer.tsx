@@ -17,7 +17,6 @@ interface MyKnownError {
 
 interface FavoriteAttributes {
   token: string
-  animal: string
 }
 
 interface NewFavoriteAttributes {
@@ -28,9 +27,18 @@ interface NewFavoriteAttributes {
   token: string
 }
 
+interface DelFavoriteAttributes {
+  token: string
+  fav_id: number
+}
+
 export type NewFavoriteResponse = {
   message: string
   id: number
+}
+
+export type DelFavoriteResponse = {
+  message: string
 }
 
 export const getFavorites = createAsyncThunk<
@@ -46,10 +54,15 @@ export const getFavorites = createAsyncThunk<
   'favorites/update',
   async (favoriteAttr, thunkApi) => {
     try {
-      const response = await favoriteService.getFavoritesByUser(
-        favoriteAttr.animal,
+      const catResponse = await favoriteService.getFavoritesByUser(
+        'cat',
         favoriteAttr.token
       )
+      const dogResponse = await favoriteService.getFavoritesByUser(
+        'dog',
+        favoriteAttr.token
+      )
+      const response = catResponse.concat(dogResponse)
       //console.log(data)
 
       return response as FavoriteType[]
@@ -85,6 +98,41 @@ export const addFavorite = createAsyncThunk<
         favoriteAttr.animal,
         favoriteAttr.image_id,
         favoriteAttr.token
+      )
+      //console.log(data)
+
+      return response as NewFavoriteResponse
+    } catch (err) {
+      const error = err as AxiosError<MyKnownError>
+      //console.log(response)
+      //if (response.status === 400) {
+      // Return the known error for future handling
+      //console.log(response)
+      if (!error.response) {
+        throw err
+      }
+      return thunkApi.rejectWithValue(error.response.data)
+    }
+  }
+  //return (await response) as UserSession
+)
+
+export const deleteFavorite = createAsyncThunk<
+  // Return type of the payload creator
+  DelFavoriteResponse,
+  // First argument to the payload creator
+  DelFavoriteAttributes,
+  // Types for ThunkAPI
+  {
+    rejectValue: MyKnownError
+  }
+>(
+  'favorites/delete',
+  async (favoriteAttr, thunkApi) => {
+    try {
+      const response = await favoriteService.delFavorite(
+        favoriteAttr.token,
+        favoriteAttr.fav_id
       )
       //console.log(data)
 
@@ -164,6 +212,16 @@ const favoriteSlice = createSlice({
           }
 
           state.favorites = [...state.favorites, newFav]
+          state.loading = 'succeeded'
+          state.error = null
+        }
+      })
+      .addCase(deleteFavorite.fulfilled, (state, action) => {
+        if (action.payload.message === 'SUCCESS') {
+          const temp = state.favorites.filter(
+            (fav) => fav.id !== action.meta.arg.fav_id
+          )
+          state.favorites = temp
           state.loading = 'succeeded'
           state.error = null
         }

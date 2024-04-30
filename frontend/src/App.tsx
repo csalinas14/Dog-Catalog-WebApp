@@ -67,8 +67,7 @@ function App() {
   }, [dispatch])
 
   useEffect(() => {
-    if (userState.user)
-      dispatch(getFavorites({ animal: 'cat', token: userState.user.token }))
+    if (userState.user) dispatch(getFavorites({ token: userState.user.token }))
   }, [dispatch, userState.user])
 
   return (

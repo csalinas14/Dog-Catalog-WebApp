@@ -64,7 +64,10 @@ const UserPage = () => {
           </div>
         </div>
         <div>
-          <FavoritesList favorites={favoriteState.favorites} />
+          <FavoritesList
+            favorites={favoriteState.favorites}
+            user={userState.user}
+          />
         </div>
       </div>
     </div>
