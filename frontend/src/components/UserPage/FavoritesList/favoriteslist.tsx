@@ -20,9 +20,6 @@ const FavoritesList = ({
     dispatch(deleteFavorite({ token: user.token, fav_id }))
   }
 
-  console.log('Favorites on User Page')
-  console.log(favorites)
-  console.log(user)
   if (!favorites) {
     return <div>No favorites</div>
   }

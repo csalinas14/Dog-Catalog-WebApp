@@ -52,9 +52,33 @@ const Navbar = () => {
             <li>
               <Link to='/gallery'>Gallery</Link>
             </li>
-            <li>
-              <Link to='/login'>Sign In</Link>
-            </li>
+            {userState.user ? (
+              <li>
+                <details open>
+                  <summary>Account</summary>
+                  <ul tabIndex={0}>
+                    <li
+                      tabIndex={0}
+                      role='button'
+                      className='justify-between'
+                      onClick={() => navigate(`/user/${userState.user?.id}`)}
+                    >
+                      <a>
+                        Profile <span className='badge'>New</span>
+                      </a>
+                    </li>
+
+                    <li role='button' onClick={handleLogout}>
+                      <a tabIndex={0}>Logout</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            ) : (
+              <li>
+                <Link to='/login'>Sign In</Link>
+              </li>
+            )}
           </ul>
         </div>
         <Link

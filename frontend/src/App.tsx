@@ -34,9 +34,7 @@ function App() {
     window.history.scrollRestoration = 'manual'
     const sessionS = sessionStorage.getItem('user')
     const localS = localStorage.getItem('user')
-    console.log(sessionS)
-    console.log(localS)
-    console.log('DISPATCHING CHECKSESSION')
+
     if (localS !== null) {
       //const storage = localS ? localS : sessionS
       const longerSession = JSON.parse(localS)
@@ -45,7 +43,7 @@ function App() {
       //onsole.log(activeSession)
     } else if (sessionS) {
       const shortSession = JSON.parse(sessionS)
-      console.log(shortSession)
+
       dispatch(checkSession({ token: shortSession.token }))
     }
     /*

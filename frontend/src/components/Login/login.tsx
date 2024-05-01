@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import loginService from '../../services/login'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../utils/functions'
 import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
 import { resetIdle, selectUser, updateUser } from '../../reducers/usersReducer'
@@ -30,7 +30,7 @@ const LoginPage = () => {
     if (updateUser.fulfilled.match(resultAction)) {
       const user = resultAction.payload
       //showToast('success', `Updated ${user.name}`)
-      console.log(user)
+
       navigate('/?success=true')
       setTimeout(() => {
         dispatch(resetIdle())
@@ -72,8 +72,6 @@ const LoginPage = () => {
     setPassword('')
     setRememberMe(false)
   }
-
-  console.log(userState)
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
@@ -128,7 +126,7 @@ const LoginPage = () => {
                 onChange={({ target }) => setPassword(target.value)}
               />
             </label>
-            <div className='flex flex-row'>
+            <div className='flex flex-row place-content-between'>
               <label
                 className='cursor-pointer label'
                 onChange={() => setRememberMe(!rememberMe)}
@@ -145,6 +143,12 @@ const LoginPage = () => {
                 />
                 <span className='label-text ml-2'>Remember me</span>
               </label>
+              <Link
+                to='/signup'
+                className='place-content-center label-text link link-info'
+              >
+                Create Account?
+              </Link>
             </div>
             <button className='btn btn-neutral w-full mt-1 text-white'>
               {userState.loading === 'pending' ? (

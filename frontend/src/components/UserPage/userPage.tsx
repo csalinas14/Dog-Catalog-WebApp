@@ -16,12 +16,9 @@ const UserPage = () => {
 
   const userState = useAppSelector(selectUser)
   const favoriteState = useAppSelector(selectFavorites)
-  console.log(userId)
-  console.log(userState)
 
   //only can access your user page if logged in
   useEffect(() => {
-    console.log('test')
     if (userState.loading !== 'start') {
       if (!(userState.user && userState.user.id.toString() === userId))
         navigate('/')
@@ -37,10 +34,9 @@ const UserPage = () => {
         //onsole.log(activeSession)
       } else if (sessionS) {
         const shortSession = JSON.parse(sessionS)
-        console.log(shortSession)
+
         dispatch(checkSession({ token: shortSession.token }))
       } else {
-        console.log('last resort')
         navigate('/')
       }
     }

@@ -133,25 +133,15 @@ const userSlice = createSlice({
         //const msg = getErrorMessage(action.payload)
 
         if (action.payload) {
-          //const stringify_payload = JSON.stringify(action.payload)
-          //console.log(action.payload?.response.data)
-          console.log(action.payload)
           state.error = action.payload.message
         } else state.error = action.error.message
-        /*
-        if (action.payload) {
-          state.error = action.payload.errorMessage
-        } else {
-          state.error = action.error.message
-        }
-        */
+
         state.loading = 'failed'
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = 'pending'
       })
       .addCase(checkSession.fulfilled, (state, { payload }) => {
-        console.log(payload)
         if (!payload.active) {
           sessionStorage.removeItem('user')
           localStorage.removeItem('user')
@@ -161,8 +151,6 @@ const userSlice = createSlice({
         } else {
           const sessionS = sessionStorage.getItem('user')
           const localS = localStorage.getItem('user')
-          console.log(sessionS)
-          console.log(localS)
 
           if (localS !== null) {
             const longerSession = JSON.parse(localS)

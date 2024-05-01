@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const SignUpPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -102,6 +103,13 @@ const SignUpPage = () => {
                 onChange={({ target }) => setConfirmPassword(target.value)}
               />
             </label>
+            <div className='flex flex-row'>
+              <span className='label-text'>Have an account? </span>
+              &nbsp;
+              <Link to='/login' className='label-text link link-info'>
+                Sign In
+              </Link>
+            </div>
 
             <button className='btn btn-neutral w-full mt-1 text-white'>
               Sign Up
