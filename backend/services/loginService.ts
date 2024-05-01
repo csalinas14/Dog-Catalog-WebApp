@@ -37,13 +37,15 @@ const login = async (user: loginUser) => {
 
   await Session.create({
     userId: userFound.id,
-    token: token
+    token: token,
+    rememberMe: user.rememberMe
   });
 
   const loginUser = {
     token,
     username: userFound.username,
-    name: userFound.name
+    name: userFound.name,
+    id: userFound.id
   };
   return loginUser;
 };

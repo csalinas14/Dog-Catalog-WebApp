@@ -137,7 +137,11 @@ export interface Param {
   id: string;
 }
 
-export type Image = z.infer<typeof ImageSchema>;
+const ImageAPISchema = ImageSchema.extend({
+  type: z.string()
+});
+
+export type Image = z.infer<typeof ImageAPISchema>;
 
 export interface ImagesQuery extends BaseQuery {
   id: string;
@@ -181,8 +185,12 @@ interface NewUserPartial extends UserEntry {
 //used for taking unknown new user requests
 export type NewUser = Omit<NewUserPartial, 'id' | 'passwordHash'>;
 
+interface LoginSession extends NewUserPartial {
+  rememberMe: boolean;
+}
+
 //type used for logining in. Requires only username and password.
-export type loginUser = Omit<NewUser, 'name'>;
+export type loginUser = Omit<LoginSession, 'name'>;
 
 //type for our User Model
 export interface UserInstance
@@ -197,6 +205,7 @@ interface SessionEntry {
   id: number;
   token: string;
   userId: number;
+  rememberMe: boolean;
 }
 
 export interface PreDatabaseSession extends Optional<SessionEntry, 'id'> {}
@@ -245,6 +254,31 @@ export type CreateFavorite = z.infer<typeof PostFavoriteSchema>;
 
 export const isCreateFavorite = (obj: unknown) => {
   const parsedObj = PostFavoriteSchema.safeParse(obj);
+  if (!parsedObj.success) {
+    console.error(parsedObj.error.message);
+    return false;
+  }
+  return true;
+};
+
+const ImageFavoriteSchema = z.object({
+  id: z.string(),
+  url: z.string().url()
+});
+
+const FavoriteSchema = z.object({
+  id: z.number(),
+  user_id: z.string().optional(),
+  image_id: z.string(),
+  sub_id: z.string(),
+  created_at: z.string().optional(),
+  image: ImageFavoriteSchema
+});
+
+export type FavoriteType = z.infer<typeof FavoriteSchema>;
+
+export const isFavorite = (obj: unknown) => {
+  const parsedObj = FavoriteSchema.safeParse(obj);
   if (!parsedObj.success) {
     console.error(parsedObj.error.message);
     return false;

@@ -1,6 +1,6 @@
 import express from 'express';
 import apiService from '../services/apiService';
-import { BaseQuery, Param, ImagesQuery } from '../types';
+import { BaseQuery, Param, ImagesQuery, NewFavorite } from '../types';
 import { Request } from 'express';
 import { toNewFavorite } from '../utils';
 import middleware from '../utils/middleware';
@@ -133,19 +133,31 @@ router.post('/favorites', middleware.tokenExtractor, async (req, res) => {
   }
 });
 
-router.get('/favorites', middleware.tokenExtractor, async (req, res) => {
-  try {
-    const response = await apiService.getFavorites(req);
-    res.send(response.data);
-  } catch (error: unknown) {
-    let errorMessage = 'Something went wrong.';
-    if (error instanceof Error) {
-      errorMessage += ' Error: ' + error.message;
-    }
-    console.log(errorMessage);
-    res.status(400).send(errorMessage);
+router.get(
+  '/favorites',
+  middleware.tokenExtractor,
+  (
+    req: Request<unknown, unknown, unknown, NewFavorite>,
+    res: Record<string, any>
+  ) => {
+    // prettier-ignore-start
+    void (async () => {
+      try {
+        //const { query } = req;
+        const data = await apiService.getFavorites(req.query.animal, req.user);
+        res.send(data);
+      } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+          errorMessage += ' Error: ' + error.message;
+        }
+        console.log(errorMessage);
+        res.status(400).send(errorMessage);
+      }
+    })();
+    // prettier-ignore-end
   }
-});
+);
 
 router.delete('/favorites/:id', middleware.tokenExtractor, async (req, res) => {
   try {

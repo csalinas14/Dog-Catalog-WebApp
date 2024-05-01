@@ -1,4 +1,9 @@
+import { useMatch } from 'react-router-dom'
+
 const Footer = () => {
+  const loginMatch = useMatch('/login')
+
+  if (loginMatch) return
   return (
     <footer className='footer footer-center p-10 bg-primary text-primary-content'>
       <aside>

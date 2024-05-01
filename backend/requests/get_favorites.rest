@@ -1,3 +1,3 @@
 GET https://api.thecatapi.com/v1/favourites HTTP/1.1
 content-type: application/json
-x-api-key: #add key
+x-api-key: live_TaEbS7fvAgS9uGWJrF75VUJF6o3Oc0urAy5KS9pTdKaRm7QHWN7Rm3sq4ilnlVaL
