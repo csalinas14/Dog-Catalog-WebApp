@@ -1,9 +1,14 @@
 import { User } from '../models';
-import { PreDatabaseUser, UserInstance } from '../types';
+import { NonSensitiveUser, PreDatabaseUser, UserInstance } from '../types';
 
 const addUser = async (newUser: PreDatabaseUser) => {
   const user = await User.create(newUser);
-  return user;
+  const nonSenUser: NonSensitiveUser = {
+    name: user.name,
+    id: user.id,
+    username: user.username
+  };
+  return nonSenUser;
 };
 
 const getUsers = async (): Promise<UserInstance[]> => {

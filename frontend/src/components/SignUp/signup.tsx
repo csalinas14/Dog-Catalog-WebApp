@@ -1,22 +1,47 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import userService from '../../services/users'
+import { getErrorMessage } from '../../utils/functions'
+import Toast from '../Toast/toast'
 
 const SignUpPage = () => {
   const [email, setEmail] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
+
+  const navigate = useNavigate()
 
   const handleSignUp = async (event: React.SyntheticEvent) => {
     event.preventDefault()
 
-    console.log('signup request')
+    try {
+      if (password !== confirmPassword)
+        throw Error('Passwords are not the same')
+      const user = await userService.signUp({
+        name,
+        password,
+        username: email,
+      })
+      navigate('/login?success=true')
+    } catch (error) {
+      const message = getErrorMessage(error)
+      setError(message)
+      setTimeout(() => {
+        setError('')
+      }, 3000)
+    }
+
     setEmail('')
+    setName('')
     setPassword('')
+    setConfirmPassword('')
   }
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
+      {error ? <Toast message={error} type={'error'} /> : <></>}
       <div className='relative flex flex-col m-6 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
         <div className='flex flex-col justify-center p-8 md:p-14'>
           <h1 className='mb-3 text-4xl font-bold text-secondary'>

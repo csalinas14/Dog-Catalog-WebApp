@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import loginService from '../../services/login'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { getErrorMessage } from '../../utils/functions'
 import { useAppDispatch, useAppSelector } from '../../utils/redux_hooks'
 import { resetIdle, selectUser, updateUser } from '../../reducers/usersReducer'
@@ -17,6 +17,9 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch()
   const userState = useAppSelector(selectUser)
+
+  const [searchParams] = useSearchParams()
+  const success = searchParams.get('success')
 
   const handleLogin = async (event: React.SyntheticEvent) => {
     event.preventDefault()
@@ -75,6 +78,14 @@ const LoginPage = () => {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-base-100'>
+      {success === 'true' ? (
+        <Toast
+          message={'Successfully created account. Please login.'}
+          type={'success'}
+        />
+      ) : (
+        <></>
+      )}
       {userState.loading === 'failed' ? (
         <Toast message={userState.error} type={'error'} />
       ) : (

@@ -32,15 +32,18 @@ const Toast = (props: { type: string; message: string | undefined | null }) => {
     setShow(false)
   }, 3000)
 
-  if (show)
+  if (show) {
+    const alertType =
+      props.type === 'error' ? 'alert alert-error' : 'alert bg-white shadow-md'
     return (
       <div className='toast toast-top toast-center top-8 z-50'>
-        <div className={`alert alert-${props.type}`}>
+        <div role='alert' className={alertType}>
           <Icon />
           <span className=''>{message}</span>
         </div>
       </div>
     )
+  }
 }
 
 export default Toast
