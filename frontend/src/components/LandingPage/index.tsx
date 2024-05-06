@@ -9,6 +9,24 @@ import {
 } from '../../constants'
 import CarouselBody from './Carousel/body'
 import LandingPageEnding from './Ending'
+import { motion, Variants } from 'framer-motion'
+
+const divVariants: Variants = {
+  offscreen: {
+    y: 150,
+    opacity: 0,
+  },
+  onscreen: {
+    y: 50,
+    opacity: 1,
+    transition: {
+      delay: 0.2,
+      type: 'spring',
+      velocity: 30,
+      mass: 0.5,
+    },
+  },
+}
 
 const LandingPage = () => {
   const catsResponse = useImages({
@@ -34,11 +52,15 @@ const LandingPage = () => {
 
   return (
     <div className='bg-base-200'>
-      <Hero />
-      <LandingPageBody />
-      <CarouselBody />
-      <CarouselImages images={imageArray} responses={responses} />
-      <LandingPageEnding />
+      <Hero variants={divVariants} />
+      <LandingPageBody variants={divVariants} />
+      <CarouselBody variants={divVariants} />
+      <CarouselImages
+        images={imageArray}
+        responses={responses}
+        variants={divVariants}
+      />
+      <LandingPageEnding variants={divVariants} />
     </div>
   )
 }

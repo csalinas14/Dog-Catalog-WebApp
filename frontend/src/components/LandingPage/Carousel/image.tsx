@@ -3,13 +3,16 @@ import CarouselSkeleton from '../ImagesSkeleton/skeleton'
 import React, { useState } from 'react'
 import ScrollIndicator from './scrollindicator'
 import { useEffect } from 'react'
+import { motion, Variants } from 'framer-motion'
 
 const CarouselImages = ({
   images,
   responses,
+  variants,
 }: {
   images: Image[]
   responses: ImageResponse[]
+  variants: Variants
 }) => {
   const target = React.useRef<HTMLDivElement | null>(null)
   const pictureRef = React.useRef<HTMLDivElement | null>(null)
@@ -62,26 +65,33 @@ const CarouselImages = ({
   }
 
   return (
-    <div>
-      <div
-        ref={target}
-        className='carousel carousel-center space-x-4 p-4 bg-accent snap'
-      >
-        {images.map((img, i) => (
-          <div
-            className='carousel-item w-4/5 md:w-3/5 lg:w-2/5'
-            key={img ? img.id : i}
-          >
-            <img
-              className='aspect-[3/2] object-fit border-1 border-gray-500 rounded-2xl'
-              src={img ? img.url : undefined}
-              alt='Animal'
-            />
-          </div>
-        ))}
-      </div>
-      <ScrollIndicator target={carouselRef} photoRef={pictureRef} />
-    </div>
+    <motion.div
+      className='bg-base-200'
+      initial='offscreen'
+      whileInView='onscreen'
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.div variants={variants}>
+        <div
+          ref={target}
+          className='carousel carousel-center space-x-4 p-4 bg-accent snap'
+        >
+          {images.map((img, i) => (
+            <div
+              className='carousel-item w-4/5 md:w-3/5 lg:w-2/5'
+              key={img ? img.id : i}
+            >
+              <img
+                className='aspect-[3/2] object-fit border-1 border-gray-500 rounded-2xl'
+                src={img ? img.url : undefined}
+                alt='Animal'
+              />
+            </div>
+          ))}
+        </div>
+        <ScrollIndicator target={carouselRef} photoRef={pictureRef} />
+      </motion.div>
+    </motion.div>
   )
 }
 
