@@ -1,11 +1,6 @@
-import { Image, ImageResponse } from '../../../../types'
+import { Image } from '../../../../types'
 
-const CarouselContainer = ({
-  images,
-}: {
-  images: Image[]
-  responses: ImageResponse[]
-}) => {
+const CarouselContainer = (images: Image[]) => {
   return (
     <div className='carousel space-x-4 p-4 bg-accent '>
       {images.map((img) => (
