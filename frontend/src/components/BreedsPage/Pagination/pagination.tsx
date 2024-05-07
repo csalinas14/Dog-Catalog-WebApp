@@ -26,7 +26,7 @@ const Pagination = ({
   }
 
   return (
-    <div className='w-full py-10'>
+    <div className='w-full py-10 mt-8'>
       <div className='join flex place-content-center'>
         <button
           className='join-item btn'

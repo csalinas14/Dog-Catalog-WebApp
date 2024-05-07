@@ -9,7 +9,7 @@ import {
 } from '../../constants'
 import CarouselBody from './Carousel/body'
 import LandingPageEnding from './Ending'
-import { motion, Variants } from 'framer-motion'
+import { Variants } from 'framer-motion'
 
 const divVariants: Variants = {
   offscreen: {
