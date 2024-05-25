@@ -1,4 +1,5 @@
 import { Image } from '../../../../types'
+import { motion, Variants } from 'framer-motion'
 
 const BreedInfoImage = ({ image }: { image: Image }) => {
   return (
@@ -8,16 +9,28 @@ const BreedInfoImage = ({ image }: { image: Image }) => {
   )
 }
 
-const BreedInfoGallery = ({ images }: { images: Image[] }) => {
+const BreedInfoGallery = ({
+  images,
+  variants,
+}: {
+  images: Image[]
+  variants: Variants
+}) => {
   return (
-    <div className='my-8'>
-      <h2 className='text-3xl font-semibold py-4'>Check out some photos</h2>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-        {images.map((img) => (
-          <BreedInfoImage image={img} />
-        ))}
-      </div>
-    </div>
+    <motion.div
+      initial='offscreen'
+      whileInView='onscreen'
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.div className='mt-8 mb-20' variants={variants}>
+        <h2 className='text-3xl font-semibold py-4'>Check out some photos</h2>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+          {images.map((img) => (
+            <BreedInfoImage image={img} key={img.id} />
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
