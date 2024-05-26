@@ -4,6 +4,8 @@ import * as jwt from 'jsonwebtoken';
 import { SECRET } from '../utils/config';
 import { Session } from '../models';
 import { UserToken } from '../types';
+import { promisify } from 'util';
+import multer, { StorageEngine } from 'multer';
 
 const errorHandler = (
   error: Error,
@@ -29,7 +31,6 @@ const tokenExtractor = async (
   next: NextFunction
 ) => {
   const authorization = request.get('authorization');
-  console.log(authorization);
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
       const decodedToken = jwt.verify(authorization.substring(7), SECRET);
@@ -58,6 +59,13 @@ const tokenExtractor = async (
   }
   return next();
 };
+
+const maxSize = 2 * 1024 * 1024;
+let storage = multer.memoryStorage();
+
+const upload = multer({
+  storage: storage
+}).single('files');
 
 export default {
   errorHandler,
