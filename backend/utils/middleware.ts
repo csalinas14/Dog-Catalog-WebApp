@@ -5,7 +5,8 @@ import { SECRET } from '../utils/config';
 import { Session } from '../models';
 import { UserToken } from '../types';
 import { promisify } from 'util';
-import multer, { StorageEngine } from 'multer';
+import multer from 'multer';
+import { extname } from 'path';
 
 const errorHandler = (
   error: Error,
@@ -61,13 +62,24 @@ const tokenExtractor = async (
 };
 
 const maxSize = 2 * 1024 * 1024;
-let storage = multer.memoryStorage();
+const storage = multer.memoryStorage();
 
 const upload = multer({
-  storage: storage
-}).single('files');
+  storage: storage,
+  limits: { fileSize: maxSize, files: 1 },
+  fileFilter: (_req, file, callback) => {
+    const ext = extname(file.originalname);
+    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+      return callback(new Error('Only images are allowed'));
+    }
+    callback(null, true);
+  }
+}).single('profilepic');
+
+const processFileMiddleware = promisify(upload);
 
 export default {
   errorHandler,
-  tokenExtractor
+  tokenExtractor,
+  processFileMiddleware
 };
