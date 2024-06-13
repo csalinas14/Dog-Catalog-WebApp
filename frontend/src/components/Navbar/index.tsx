@@ -8,7 +8,6 @@ const Navbar = () => {
   const userState = useAppSelector(selectUser)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  //console.log(userState)
 
   const handleLogout = (event: React.SyntheticEvent) => {
     event.preventDefault()
@@ -86,13 +85,13 @@ const Navbar = () => {
           className='btn btn-ghost hover:bg-inherit text-xl hidden sm:ml-20 lg:ml-28 lg:flex lg:text-2xl xl:text-5xl'
           to='/'
         >
-          Dogs & Cats
+          Pets 4 You
         </Link>
       </div>
 
       <div className='navbar-center lg:hidden '>
         <Link className='btn btn-ghost text-xl' to='/'>
-          Dogs & Cats
+          Pets 4 You
         </Link>
       </div>
 
